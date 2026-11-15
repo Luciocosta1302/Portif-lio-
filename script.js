@@ -174,7 +174,13 @@ $("#other").innerHTML = OTHER.map((p) => `
 
 /* ---------- Sobre: stack ---------- */
 $("#stack").innerHTML = STACK.map((g) => `
-  <div><h3>${esc(g.group)}</h3><ul>${g.items.map((i) => `<li>${esc(i)}</li>`).join("")}</ul></div>`).join("");
+  <div class="stack-group reveal">
+    <h3>${esc(g.group)}</h3>
+    <ul class="tools">${g.items.map(([name, key]) => {
+      const ic = ICONS[key] || { svg: "", color: "" };
+      return `<li class="tool" style="--c:${ic.color}">${ic.svg}<span>${esc(name)}</span></li>`;
+    }).join("")}</ul>
+  </div>`).join("");
 
 /* ---------- Experiência / formação ---------- */
 const timeline = (list) => list.map((e) => `

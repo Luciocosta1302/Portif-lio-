@@ -75,11 +75,25 @@ const OTHER = [
   { title: "Ciclo do Nitrogênio", desc: "Modelagem em grafos com BFS e Dijkstra · UNIFESSPA", stack: "Java", year: "2025" },
 ];
 
+/* icon: chave em icons.js */
 const STACK = [
-  { group: "Front-end", items: ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Next.js", "Three.js"] },
-  { group: "IA & Dados", items: ["Engenharia de prompts", "APIs Claude, Gemini, ChatGPT", "RAG", "LangGraph", "SQL", "pgvector", "Supabase"] },
-  { group: "Back-end", items: ["Python", "FastAPI", "Java (OOP)", "Estruturas de dados", "Git & GitHub"] },
-  { group: "TI & Suporte", items: ["Hardware e software", "Redes", "Sistemas operacionais", "Excel avançado", "Noções de LGPD"] },
+  { group: "Front-end", items: [
+    ["HTML", "html5"], ["CSS", "css3"], ["JavaScript", "javascript"], ["TypeScript", "typescript"],
+    ["React", "react"], ["Next.js", "nextdotjs"], ["Three.js", "threedotjs"],
+  ] },
+  { group: "IA & Dados", items: [
+    ["Claude", "claude"], ["Gemini", "googlegemini"], ["ChatGPT", "openai"], ["LangChain · LangGraph", "langchain"],
+    ["RAG", "brain-circuit"], ["Engenharia de prompts", "message-square-code"],
+    ["PostgreSQL · pgvector", "postgresql"], ["Supabase", "supabase"], ["SQL · SQLite", "sqlite"],
+  ] },
+  { group: "Back-end", items: [
+    ["Python", "python"], ["FastAPI", "fastapi"], ["Pydantic", "pydantic"], ["Java", "openjdk"],
+    ["Estruturas de dados", "binary"], ["Git", "git"], ["GitHub", "github"], ["Netlify", "netlify"],
+  ] },
+  { group: "TI & Ferramentas", items: [
+    ["Hardware", "cpu"], ["Redes", "network"], ["Sistemas operacionais", "monitor"], ["Linux", "linux"],
+    ["Troubleshooting", "wrench"], ["Excel avançado", "file-spreadsheet"], ["Canva", "canva"], ["LGPD", "shield-check"],
+  ] },
 ];
 
 /* type: "open" = vaga futura (pontilhado). Troque quando conseguir o emprego. */
