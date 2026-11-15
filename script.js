@@ -16,7 +16,7 @@
      size: largura em px quando está a 520 unidades da câmera
      o: opacidade máxima · full: imagem sem máscara nas bordas */
   const OBJECTS = [
-    { src: "eclipse",   x: 0.30,  y: -0.06, mx: 0.5, my: -0.34, z: 560,  size: 1100, o: 0.55, full: true },
+    { src: "eclipse",   x: 0.30,  y: -0.06, mx: 0.5, my: -0.34, z: 1500, size: 2900, o: 0.55, full: true },
     { src: "bipolar",   x: -0.42, y: 0.22,  z: 1500, size: 900,  o: 0.5 },
     { src: "jewel",     x: 0.40,  y: -0.18, z: 2300, size: 700,  o: 0.55 },
     { src: "lmc",       x: -0.05, y: 0.05,  z: 3100, size: 1500, o: 0.35 },
@@ -48,7 +48,8 @@
     maxCam = Math.max(1, (document.documentElement.scrollHeight - H) * DEPTH);
     // a lua fica sempre um pouco à frente do fim do caminho
     OBJECTS[OBJECTS.length - 1].zAuto = maxCam + 650;
-    const n = mobile ? 260 : 520;
+    sizeObjects();
+    const n = mobile ? 220 : 480;
     stars = Array.from({ length: n }, () => newStar(Math.random() * 2000 + 20));
   }
 
@@ -56,6 +57,13 @@
     return { x: (Math.random() - 0.5) * 2600, y: (Math.random() - 0.5) * 1800, z, b: Math.random() * 0.7 + 0.3 };
   }
 
+  // tamanho fixo definido uma vez; por quadro só mudam transform e opacity
+  function sizeObjects() {
+    const scale = mobile ? 0.6 : 1;
+    OBJECTS.forEach((o, i) => { els[i].style.width = o.size * scale + "px"; });
+  }
+
+  const last = OBJECTS.map(() => ({ o: -1, t: "" }));
   function placeObjects() {
     const scale = mobile ? 0.6 : 1;
     OBJECTS.forEach((o, i) => {
@@ -63,20 +71,23 @@
       const z = (o.z ?? o.zAuto) * (o.z && maxCam < 7000 ? maxCam / 7000 : 1);
       const rel = z - cam;
       const far = o.far || 2600;
-      if (rel < 40 || rel > far) { el.style.opacity = 0; return; }
-      const k = F / rel;
-      const w = o.size * scale * k;
-      const ox = mobile && o.mx != null ? o.mx : o.x;
-      const oy = mobile && o.my != null ? o.my : o.y;
-      const sx = W / 2 + ox * W * k * 1.4;
-      const sy = H / 2 + oy * H * k * 1.4;
-      // aparece ao longe, some ao passar pela câmera
-      const fadeIn = Math.min(1, (far - rel) / (o.far ? 300 : 900));
-      const fadeOut = Math.min(1, (rel - 40) / 260);
-      el.style.opacity = (o.o * fadeIn * fadeOut).toFixed(3);
-      el.style.width = o.size * scale + "px";
-      el.style.transform = `translate3d(${sx - w / 2}px, ${sy - (w * (el.naturalHeight / el.naturalWidth || 1)) / 2}px, 0) scale(${k})`;
-      el.style.transformOrigin = "0 0";
+      let op = 0, t = last[i].t;
+      // some antes de ficar enorme: nada cresce mais que 2,6x perto do texto
+      if (rel > 220 && rel < far) {
+        const k = Math.min(F / rel, 2.6);
+        const w = o.size * scale * k;
+        const ox = mobile && o.mx != null ? o.mx : o.x;
+        const oy = mobile && o.my != null ? o.my : o.y;
+        const sx = W / 2 + ox * W * k * 1.4;
+        const sy = H / 2 + oy * H * k * 1.4;
+        const fadeIn = Math.min(1, (far - rel) / (o.far ? 300 : 900));
+        const fadeOut = Math.min(1, (rel - 220) / 420);
+        op = Math.round(o.o * fadeIn * fadeOut * 100) / 100;
+        const hgt = w * (el.naturalHeight / el.naturalWidth || 1);
+        t = `translate3d(${(sx - w / 2).toFixed(1)}px, ${(sy - hgt / 2).toFixed(1)}px, 0) scale(${k.toFixed(4)})`;
+      }
+      if (op !== last[i].o) { el.style.opacity = op; last[i].o = op; }
+      if (op > 0 && t !== last[i].t) { el.style.transform = t; last[i].t = t; }
     });
   }
 
