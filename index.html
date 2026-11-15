@@ -4,206 +4,146 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Lúcio Costa — Desenvolvedor Web & IA</title>
-  <meta name="description" content="Portfólio de Lúcio Henrique Ribeiro Costa — desenvolvedor web, IA generativa e estudante de Sistemas de Informação na UNIFESSPA." />
+  <meta name="description" content="Lúcio Costa — desenvolvedor web e IA, estudante de Sistemas de Informação na UNIFESSPA. Projetos, experiência e certificados." />
   <meta property="og:title" content="Lúcio Costa — Desenvolvedor Web & IA" />
-  <meta property="og:description" content="Projetos, stack, designs e trajetória. Missão em andamento." />
-  <meta property="og:image" content="assets/img/lucio-mirante.jpg" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='7' fill='%237cc4ff'/%3E%3Cellipse cx='16' cy='16' rx='14' ry='5' fill='none' stroke='%23ff7ad9' stroke-width='2' transform='rotate(-25 16 16)'/%3E%3C/svg%3E" />
+  <meta property="og:description" content="Produtos web com IA, de lojas virtuais a agentes inteligentes." />
+  <meta property="og:image" content="assets/projects/luricos.jpg" />
+  <meta name="theme-color" content="#08090c" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2308090c'/%3E%3Ctext x='16' y='21' font-family='Arial' font-size='13' font-weight='700' fill='%23eceef1' text-anchor='middle'%3ELC%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Céu: estrelas (canvas) + nebulosas (CSS) -->
   <div class="sky" aria-hidden="true">
-    <div class="nebula n1"></div>
-    <div class="nebula n2"></div>
-    <div class="nebula n3"></div>
     <canvas id="stars"></canvas>
+    <div class="space" id="space"></div>
+    <div class="veil"></div>
+    <div class="grain"></div>
   </div>
 
-  <header class="nav">
-    <a href="#top" class="logo" aria-label="Início">
-      <span class="logo-orb"></span> LC<span class="blink">_</span>
-    </a>
-    <nav>
-      <button class="menu-btn" aria-label="Abrir menu" aria-expanded="false">☰</button>
-      <ul class="menu">
-        <li><a href="#sobre">Sobre</a></li>
-        <li><a href="#projetos">Projetos</a></li>
-        <li><a href="#designs">Designs</a></li>
-        <li><a href="#stack">Stack</a></li>
-        <li><a href="#trajetoria">Trajetória</a></li>
-        <li><a href="#certificados">Certificados</a></li>
-        <li><a href="#contato" class="nav-cta">Contato</a></li>
-      </ul>
-    </nav>
+  <header class="top">
+    <div class="hud-bar mono" aria-hidden="true">
+      <span><i>LOCAL::</i><b class="js-clock">--:--</b> BRT</span>
+      <span><i>STATUS::</i><b>ABERTO A ESTÁGIO</b></span>
+      <span class="hide-sm"><i>BASE::</i><b>MARABÁ · PA</b></span>
+      <span class="hide-sm"><i>FOCO::</i><b>WEB + IA</b></span>
+    </div>
+    <div class="top-row">
+      <a href="#inicio" class="brand" aria-label="Lúcio Costa, início"><span>L</span><span>C</span></a>
+      <nav class="nav" aria-label="Principal">
+        <a href="#trabalhos" data-roll="Trabalhos">Trabalhos</a>
+        <a href="#sobre" data-roll="Sobre">Sobre</a>
+        <a href="#experiencia" data-roll="Experiência">Experiência</a>
+        <a href="#certificados" data-roll="Certificados">Certificados</a>
+        <a href="#contato" data-roll="Contato">Contato</a>
+      </nav>
+      <a class="cta-pill" href="assets/curriculo-lucio-costa.pdf" download>Currículo ↓</a>
+      <button class="menu-btn" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
   </header>
 
-  <main id="top">
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-text">
-        <p class="mono tag"><span class="dot live"></span> MISSÃO LC-2026 · STATUS: EM ÓRBITA</p>
-        <h1>
-          Olá, eu sou <span class="grad">Lúcio Costa</span>.<br />
-          Construo produtos web<br />com <em>IA</em> no núcleo.
-        </h1>
-        <p class="lead">
-          Desenvolvedor web, fundador da <strong>lu.ricos</strong> e estudante de Sistemas de Informação na
-          UNIFESSPA. Transformo ideias em sites, apps e assistentes inteligentes — de Marabá, PA, para o mundo.
-        </p>
-        <div class="hero-actions">
-          <a href="#projetos" class="btn primary">Ver projetos ↗</a>
-          <a href="assets/curriculo-lucio-costa.pdf" class="btn ghost" download>Baixar currículo</a>
-        </div>
-        <ul class="telemetry mono">
-          <li><span>LAT</span> 5°22′S</li>
-          <li><span>LON</span> 49°07′W</li>
-          <li><span>BASE</span> Marabá · PA</li>
-          <li><span>MODO</span> Aberto a estágio</li>
-        </ul>
+  <div class="hud-foot mono" aria-hidden="true">
+    <span>GMT-3 MARABÁ <b class="js-clock">--:--</b></span>
+    <span><b id="cx">0000</b> X <b id="cy">0000</b> Y</span>
+    <span>PROFUNDIDADE <b id="depth">000</b>%</span>
+  </div>
+
+  <main id="inicio">
+    <section class="hero wrap">
+      <div class="intro mono">
+        <p>Desenvolvedor<br />Web & IA</p>
+        <p>Pensando em sistemas.<br />Construindo com IA.</p>
+        <p>Estudante de Sistemas de Informação na UNIFESSPA, fundador da lu.ricos e desenvolvedor freelance para negócios locais.</p>
       </div>
-      <div class="hero-visual">
-        <div class="orbit o1"><span class="sat"></span></div>
-        <div class="orbit o2"><span class="sat s2"></span></div>
-        <div class="portrait">
-          <img src="assets/img/lucio-mirante.jpg" alt="Lúcio Costa em um mirante com montanhas ao fundo" />
-        </div>
-        <div class="hud mono">
-          <span>CREW // 01</span>
-          <span>L.H.R. COSTA</span>
-        </div>
+      <h1 class="hero-title">
+        Lúcio Costa cria produtos web com IA,
+        <span class="muted">de lojas virtuais a agentes que pensam, buscam e respondem.</span>
+      </h1>
+      <div class="hero-meta">
+        <span class="status"><i></i>Disponível para estágio</span>
+        <a href="https://github.com/Luciocosta1302" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="https://www.linkedin.com/in/luciohrcosta" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a href="assets/curriculo-lucio-costa.pdf" download>Currículo ↓</a>
       </div>
-      <a href="#sobre" class="scroll-hint mono" aria-label="Rolar para baixo">SCROLL ↓</a>
     </section>
 
-    <!-- SOBRE -->
-    <section id="sobre" class="section">
-      <header class="sec-head">
-        <span class="mono idx">01</span>
-        <h2>Sobre</h2>
-        <p class="mono sub">// relatório da tripulação</p>
-      </header>
-      <div class="about">
-        <div class="about-photos">
-          <figure class="ph ph1"><img src="assets/img/lucio-formal.jpg" alt="Lúcio de terno e gravata verde" loading="lazy" /></figure>
-          <figure class="ph ph2"><img src="assets/img/lucio-cafe.jpg" alt="Lúcio sentado em um café" loading="lazy" /></figure>
-        </div>
+    <section id="trabalhos" class="wrap section">
+      <div class="label"><h2 data-scramble>Trabalhos selecionados</h2><span class="mono count" id="work-count"></span></div>
+      <div class="work" id="work"></div>
+
+      <div class="label sub"><h2 data-scramble>Outros projetos</h2><span class="mono count" id="other-count"></span></div>
+      <ul class="rows" id="other"></ul>
+    </section>
+
+    <section id="sobre" class="wrap section about">
+      <div class="label"><h2 data-scramble>Sobre</h2></div>
+      <div class="about-grid">
+        <figure class="about-photo">
+          <img src="assets/img/lucio-formal.jpg" alt="Retrato de Lúcio Costa" loading="lazy" />
+        </figure>
         <div class="about-text">
-          <p class="big">
-            Sou um dev curioso que aprende rápido, trabalha com autonomia e gosta de levar um produto
-            <span class="grad">do zero ao lançamento</span>.
-          </p>
-          <p>
-            Comecei empreendendo: criei a <strong>lu.ricos</strong>, um e-commerce de relógios onde cuido de tudo —
-            sourcing, precificação, estoque em Excel, atendimento e o próprio site, incluindo o
-            <strong>LU.BOT</strong>, um assistente de IA que recomenda produtos pelo perfil do cliente.
-          </p>
-          <p>
-            Hoje estudo Sistemas de Informação na UNIFESSPA, construo o <strong>StudyAI</strong> (EdTech com RAG)
-            e faço sites para negócios locais. Também tenho certificação Google em Suporte de TI e um olho
-            atento para design — boa parte das minhas apresentações nasce no Canva.
-          </p>
-          <div class="stats">
-            <div><b data-count="8">0</b><span>repositórios públicos</span></div>
-            <div><b data-count="3">0</b><span>sites para clientes</span></div>
-            <div><b data-count="2">0</b><span>anos construindo</span></div>
-            <div><b>3</b><span>idiomas · PT · EN · ES</span></div>
-          </div>
+          <p class="lede">Sou de Marabá, no Pará. Comecei vendendo relógios e acabei construindo a loja inteira: o site, o estoque e um assistente de IA que atende os clientes.</p>
+          <p>Hoje estudo Sistemas de Informação na UNIFESSPA e passo a maior parte do tempo entre front-end e IA aplicada: RAG, agentes com ferramentas e interfaces simples para coisas complexas. Também faço sites para negócios locais e tenho certificação Google em Suporte de TI.</p>
+          <p>Gosto de levar uma ideia do rascunho até o deploy, de aprender rápido e de trabalhar com autonomia.</p>
         </div>
       </div>
+
+      <div class="label sub"><h2 data-scramble>Linguagens & ferramentas</h2></div>
+      <div class="stack" id="stack"></div>
     </section>
 
-    <!-- PROJETOS -->
-    <section id="projetos" class="section">
-      <header class="sec-head">
-        <span class="mono idx">02</span>
-        <h2>Projetos</h2>
-        <p class="mono sub">// missões lançadas</p>
-      </header>
-      <div class="filters mono" role="tablist" aria-label="Filtrar projetos">
-        <button class="chip active" data-filter="all">Todos</button>
-        <button class="chip" data-filter="ia">IA</button>
-        <button class="chip" data-filter="web">Web</button>
-        <button class="chip" data-filter="cliente">Clientes</button>
-        <button class="chip" data-filter="academico">Acadêmico</button>
+    <section id="experiencia" class="wrap section">
+      <div class="label"><h2 data-scramble>Experiência</h2></div>
+      <ul class="rows timeline" id="experience"></ul>
+      <div class="label sub"><h2 data-scramble>Formação</h2></div>
+      <ul class="rows timeline" id="education"></ul>
+    </section>
+
+    <section id="certificados" class="wrap section">
+      <div class="label"><h2 data-scramble>Certificados</h2></div>
+      <div class="tabs mono" role="tablist" aria-label="Filtrar certificados">
+        <button role="tab" class="tab active" aria-selected="true" data-tab="done">Concluídos</button>
+        <button role="tab" class="tab" aria-selected="false" data-tab="progress">Em andamento</button>
+        <button role="tab" class="tab" aria-selected="false" data-tab="soon">Em breve</button>
       </div>
-      <div class="projects" id="projects"></div>
-      <p class="more mono">
-        Tudo aberto em <a href="https://github.com/Luciocosta1302" target="_blank" rel="noopener">github.com/Luciocosta1302 ↗</a>
-      </p>
+      <ul class="rows certs" id="certs" role="tabpanel"></ul>
     </section>
 
-    <!-- DESIGNS -->
-    <section id="designs" class="section">
-      <header class="sec-head">
-        <span class="mono idx">03</span>
-        <h2>Designs</h2>
-        <p class="mono sub">// apresentações & materiais visuais</p>
-      </header>
-      <p class="sec-intro">
-        Comunicação visual também é engenharia: apresentações acadêmicas, guias acessíveis e relatórios de
-        dados que desenhei no Canva.
-      </p>
-      <div class="designs" id="designs-grid"></div>
+    <section class="manifesto" id="manifesto" aria-label="Princípios">
+      <p class="m-big" data-scramble>Da ideia<br />ao deploy.</p>
+      <ul class="m-notes mono">
+        <li>Aprendo rápido.<br />Entrego cedo.</li>
+        <li>IA como ferramenta,<br />pessoas como foco.</li>
+        <li>Interfaces simples<br />para coisas complexas.</li>
+      </ul>
     </section>
 
-    <!-- STACK -->
-    <section id="stack" class="section">
-      <header class="sec-head">
-        <span class="mono idx">04</span>
-        <h2>Stack</h2>
-        <p class="mono sub">// sistemas a bordo</p>
-      </header>
-      <div class="stack" id="stack-grid"></div>
-    </section>
-
-    <!-- TRAJETÓRIA -->
-    <section id="trajetoria" class="section">
-      <header class="sec-head">
-        <span class="mono idx">05</span>
-        <h2>Trajetória</h2>
-        <p class="mono sub">// log de voo</p>
-      </header>
-      <ol class="timeline" id="timeline"></ol>
-    </section>
-
-    <!-- CERTIFICADOS -->
-    <section id="certificados" class="section">
-      <header class="sec-head">
-        <span class="mono idx">06</span>
-        <h2>Certificados</h2>
-        <p class="mono sub">// insígnias de missão</p>
-      </header>
-      <div class="tabs mono" role="tablist" aria-label="Certificados">
-        <button class="tab active" role="tab" aria-selected="true" data-tab="concluido">Concluídos</button>
-        <button class="tab" role="tab" aria-selected="false" data-tab="andamento">Em andamento</button>
-        <button class="tab" role="tab" aria-selected="false" data-tab="futuro">Próximos</button>
+    <section id="contato" class="wrap section contact">
+      <p class="eyebrow mono">Contato</p>
+      <h2 class="contact-title">Tem um projeto ou uma vaga?<br /><span class="muted">Vamos conversar.</span></h2>
+      <div class="mail">
+        <a href="mailto:luciohrcosta@gmail.com" class="mail-link">luciohrcosta@gmail.com</a>
+        <button class="copy mono" data-copy="luciohrcosta@gmail.com">Copiar</button>
       </div>
-      <div class="certs" id="certs" role="tabpanel"></div>
-    </section>
-
-    <!-- CONTATO -->
-    <section id="contato" class="section contact">
-      <p class="mono tag"><span class="dot live"></span> CANAL ABERTO</p>
-      <h2 class="contact-title">Vamos construir<br /><span class="grad">a próxima missão?</span></h2>
-      <p class="lead">Estou aberto a estágio em TI / desenvolvimento, freelas e projetos com IA.</p>
-      <div class="contact-links">
-        <a class="btn primary" href="mailto:luciohrcosta@gmail.com">luciohrcosta@gmail.com</a>
-        <a class="btn ghost" href="https://www.linkedin.com/in/luciohrcosta" target="_blank" rel="noopener">LinkedIn ↗</a>
-        <a class="btn ghost" href="https://github.com/Luciocosta1302" target="_blank" rel="noopener">GitHub ↗</a>
+      <div class="socials">
+        <a href="https://www.linkedin.com/in/luciohrcosta" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a href="https://github.com/Luciocosta1302" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="assets/curriculo-lucio-costa.pdf" download>Currículo ↓</a>
       </div>
     </section>
   </main>
 
-  <footer class="footer mono">
+  <footer class="wrap footer mono">
     <span>© <span id="year"></span> Lúcio Henrique Ribeiro Costa</span>
-    <span>Feito à mão com HTML, CSS & JS · Hospedado no GitHub Pages</span>
-    <a href="#top">Voltar ao topo ↑</a>
+    <span>Imagens de fundo: NASA, ESA / Hubble</span>
+    <a href="#inicio">Voltar ao topo ↑</a>
   </footer>
 
+  <div class="cursor mono" aria-hidden="true">Ver projeto ↗</div>
+
+  <script src="icons.js"></script>
   <script src="data.js"></script>
   <script src="script.js"></script>
 </body>

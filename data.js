@@ -1,227 +1,120 @@
 /* =========================================================
-   CONTEÚDO DO PORTFÓLIO
-   Edite só este arquivo para adicionar projetos, designs,
-   experiências e certificados. O layout se ajusta sozinho.
+   CONTEÚDO DO PORTFÓLIO — edite só este arquivo.
    ========================================================= */
 
 const GITHUB = "https://github.com/Luciocosta1302";
 
-/* tags: ia | web | cliente | academico
-   status: "live" | "dev" | "done"                        */
-const PROJECTS = [
+/* Trabalhos selecionados: aparecem com miniatura.
+   image: 1200x750 (16:10) em assets/projects/ */
+const WORK = [
+  {
+    title: "lu.ricos",
+    chip: "E-COMMERCE · IA",
+    role: "Fundador · Design & Desenvolvimento",
+    year: "2024 —",
+    desc: "E-commerce de relógios com estética editorial, carrinho com checkout pelo WhatsApp e o LU.BOT, assistente de vendas com IA.",
+    tags: ["HTML", "CSS", "JavaScript", "LLM"],
+    image: "assets/projects/luricos.jpg",
+    live: "https://storeluricos.netlify.app/",
+    code: `${GITHUB}/Lu.Ricos`,
+  },
   {
     title: "StudyAI",
-    tagline: "Plataforma de estudos com IA",
-    desc: "EdTech que gera resumos, flashcards, simulados e chat com PDF. Pipeline RAG com embeddings em pgvector para respostas precisas a partir do material do aluno.",
-    stack: ["Next.js", "React", "TypeScript", "Gemini API", "RAG", "Supabase", "pgvector"],
-    tags: ["ia", "web"],
-    status: "dev",
+    chip: "EDTECH · RAG",
+    role: "Produto pessoal · Em desenvolvimento",
     year: "2026",
-    featured: true,
-    links: {},
+    desc: "Plataforma de estudos que transforma PDFs em resumos, flashcards, simulados e um chat com o material, usando RAG.",
+    tags: ["Next.js", "TypeScript", "Gemini", "pgvector"],
+    image: "assets/projects/studyai.jpg",
   },
   {
-    title: "lu.ricos + LU.BOT",
-    tagline: "E-commerce de relógios com assistente de IA",
-    desc: "Loja própria que fundei e desenvolvi. O LU.BOT recomenda relógios a partir do perfil do cliente. Integração com Instagram, WhatsApp e Mercado Livre.",
-    stack: ["HTML", "CSS", "JavaScript", "LLM API", "Excel"],
-    tags: ["ia", "web"],
-    status: "live",
-    year: "2024 →",
-    featured: true,
-    links: { code: `${GITHUB}/Lu.Ricos` },
-  },
-  {
-    title: "Atlas AI Agent",
-    tagline: "Agente de IA em Python",
-    desc: "Agente autônomo que usa LLMs com ferramentas para executar tarefas em múltiplas etapas.",
-    stack: ["Python", "LLM API", "Agents"],
-    tags: ["ia"],
-    status: "dev",
+    title: "Atlas AI",
+    chip: "AGENTE DE IA",
+    role: "Agente de IA · Back-end",
     year: "2026",
-    links: { code: `${GITHUB}/atlas-ai-agent` },
-  },
-  {
-    title: "Detector de Golpes",
-    tagline: "App anti-fraude com LLM",
-    desc: "Analisa mensagens suspeitas e explica, em linguagem simples, por que algo pode ser golpe.",
-    stack: ["JavaScript", "LLM API"],
-    tags: ["ia", "web"],
-    status: "done",
-    year: "2025",
-    links: {},
-  },
-  {
-    title: "Patas Vet",
-    tagline: "Site para clínica veterinária",
-    desc: "Site institucional responsivo para clínica de Marabá, focado em agendamento e confiança.",
-    stack: ["HTML", "CSS", "JavaScript"],
-    tags: ["web", "cliente"],
-    status: "live",
-    year: "2025",
-    links: { code: `${GITHUB}/patas-vet` },
+    desc: "Agente que escolhe ferramentas, executa e observa. Memória em SQLite, streaming SSE e 103 testes automatizados.",
+    tags: ["Python", "LangGraph", "FastAPI", "Gemini"],
+    image: "assets/projects/atlas.jpg",
+    code: `${GITHUB}/atlas-ai-agent`,
   },
   {
     title: "Cumaru Interiores",
-    tagline: "Site para estúdio de interiores",
-    desc: "Portfólio visual elegante para empresa de design de interiores, com galeria de ambientes.",
-    stack: ["HTML", "CSS", "JavaScript"],
-    tags: ["web", "cliente"],
-    status: "live",
-    year: "2025",
-    links: { code: `${GITHUB}/cumaru-interiores` },
+    chip: "3D · CONCEITO",
+    role: "Landing page conceito",
+    year: "2026",
+    desc: "Marcenaria amazônica fictícia com mesa 3D interativa. O modelo foi otimizado de 8,9 MB para 295 KB em Python.",
+    tags: ["Three.js", "Python", "Offline-first"],
+    image: "assets/projects/cumaru.jpg",
+    live: "https://agent-6a5f7e967b61331e4893f5--cumaru-interioires.netlify.app/",
+    code: `${GITHUB}/cumaru-interiores`,
   },
   {
-    title: "Áurea Estética",
-    tagline: "Site para clínica de estética",
-    desc: "Landing page com apresentação de serviços e contato direto via WhatsApp.",
-    stack: ["HTML", "CSS", "JavaScript"],
-    tags: ["web", "cliente"],
-    status: "live",
-    year: "2025",
-    links: {},
-  },
-  {
-    title: "Sandbox 3D",
-    tagline: "Jogo de mundo aberto no navegador",
-    desc: "Jogo sandbox em 3D com construção de blocos, renderizado direto no browser.",
-    stack: ["Three.js", "JavaScript", "WebGL"],
-    tags: ["web"],
-    status: "done",
-    year: "2025",
-    links: {},
-  },
-  {
-    title: "Ciclo do Nitrogênio em Grafos",
-    tagline: "Projeto acadêmico · UNIFESSPA",
-    desc: "Modelagem do ciclo do nitrogênio como grafo, com busca em largura (BFS) e caminhos mínimos (Dijkstra).",
-    stack: ["Java", "Grafos", "BFS", "Dijkstra"],
-    tags: ["academico"],
-    status: "done",
-    year: "2025",
-    links: { code: `${GITHUB}/Prog-2` },
+    title: "Patas Vet",
+    chip: "SITE · CLIENTE",
+    role: "Site institucional",
+    year: "2026",
+    desc: "Site para clínica veterinária em Belém, com serviços, depoimentos e agendamento direto pelo WhatsApp.",
+    tags: ["HTML", "CSS", "JavaScript"],
+    image: "assets/projects/patas-vet.jpg",
+    live: "https://luciocosta1302.github.io/patas-vet/",
+    code: `${GITHUB}/patas-vet`,
   },
   {
     title: "LivrosEbook",
-    tagline: "Automação de e-books",
-    desc: "Scripts em Python para organizar e gerar conteúdo de e-books.",
-    stack: ["Python"],
-    tags: ["academico"],
-    status: "done",
-    year: "2025",
-    links: { code: `${GITHUB}/LivrosEbook` },
+    chip: "AGENTE LITERÁRIO",
+    role: "Agente literário · Claude Code",
+    year: "2026",
+    desc: "Agente de escrita de ficção com subagente, comandos próprios e bíblia do livro como memória entre capítulos.",
+    tags: ["Prompt engineering", "Agents", "Claude"],
+    image: "assets/projects/livros-ebook.jpg",
+    code: `${GITHUB}/LivrosEbook`,
   },
 ];
 
-/* Designs do Canva. "hue" define a cor da capa gerada.
-   Para usar uma imagem real, adicione: image: "assets/designs/arquivo.jpg" */
-const DESIGNS = [
-  {
-    title: "O Clique Perfeito",
-    kind: "Apresentação · Projeto Tecer Mulher",
-    desc: "Guia visual de fotografia com celular para mulheres idosas — linguagem simples e alto contraste.",
-    url: "https://www.canva.com/d/XOz5npdbrzINAMm",
-    hue: 320,
-    pages: 13,
-  },
-  {
-    title: "Replicação de Estudo SAST",
-    kind: "Apresentação acadêmica",
-    desc: "Replicação de estudo sobre ferramentas de análise estática de segurança (SAST).",
-    url: "https://www.canva.com/d/lB4Ie2cWNcjYPKd",
-    hue: 200,
-    pages: 15,
-  },
-  {
-    title: "Autonomia no WhatsApp",
-    kind: "Slides · CBIE 2026",
-    desc: "Apresentação para o Congresso Brasileiro de Informática na Educação.",
-    url: "https://www.canva.com/d/ATaB1GdKU8CulDP",
-    hue: 150,
-    pages: 8,
-  },
-  {
-    title: "E-commerce Brasileiro: Olist",
-    kind: "Relatório de dados",
-    desc: "Análise exploratória do dataset Olist: vendas, frete, avaliações e comportamento do cliente.",
-    url: "https://www.canva.com/d/hbQ-kshjKNE8W6b",
-    hue: 260,
-    pages: 13,
-  },
-  {
-    title: "Segurança Digital Descomplicada",
-    kind: "Apresentação educativa",
-    desc: "Boas práticas de segurança online explicadas para o público geral.",
-    url: "https://www.canva.com/d/vWuFa1EMxAN2M3t",
-    hue: 30,
-    pages: 13,
-  },
-  {
-    title: "Guia Visual para Idosas",
-    kind: "Material impresso · A4",
-    desc: "Versão em apostila do guia O Clique Perfeito, pensada para impressão e leitura fácil.",
-    url: "https://www.canva.com/d/trFt0CAVWerhJ0D",
-    hue: 280,
-    pages: 21,
-  },
+/* Outros projetos: lista compacta, sem miniatura. */
+const OTHER = [
+  { title: "Áurea Estética", desc: "Site para clínica de estética", stack: "HTML · CSS · JS", year: "2024" },
+  { title: "Detector de golpes", desc: "Análise de mensagens suspeitas com LLM", stack: "JS · LLM API", year: "2025" },
+  { title: "Ciclo do Nitrogênio", desc: "Modelagem em grafos com BFS e Dijkstra · UNIFESSPA", stack: "Java", year: "2025" },
 ];
 
+/* icon: chave em icons.js */
 const STACK = [
-  { group: "Front-end", icon: "◐", items: ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Next.js", "Three.js"] },
-  { group: "IA & Dados", icon: "✦", items: ["Engenharia de prompts", "Claude API", "Gemini API", "ChatGPT API", "RAG", "SQL", "pgvector", "Supabase"] },
-  { group: "Programação", icon: "⌘", items: ["Java (OOP)", "Estruturas de Dados", "Python", "Git", "GitHub"] },
-  { group: "TI & Suporte", icon: "⚙", items: ["Hardware & Software", "Redes", "Sistemas Operacionais", "Troubleshooting", "LGPD"] },
-  { group: "Produtividade", icon: "▦", items: ["Excel avançado", "Tabelas dinâmicas", "Word", "PowerPoint"] },
-  { group: "Design", icon: "◇", items: ["Canva", "UI para web", "Apresentações", "Identidade visual"] },
+  { group: "Front-end", items: [
+    ["HTML", "html5"], ["CSS", "css3"], ["JavaScript", "javascript"], ["TypeScript", "typescript"],
+    ["React", "react"], ["Next.js", "nextdotjs"], ["Three.js", "threedotjs"],
+  ] },
+  { group: "IA & Dados", items: [
+    ["Claude", "claude"], ["Gemini", "googlegemini"], ["ChatGPT", "openai"], ["LangChain · LangGraph", "langchain"],
+    ["RAG", "brain-circuit"], ["Engenharia de prompts", "message-square-code"],
+    ["PostgreSQL · pgvector", "postgresql"], ["Supabase", "supabase"], ["SQL · SQLite", "sqlite"],
+  ] },
+  { group: "Back-end", items: [
+    ["Python", "python"], ["FastAPI", "fastapi"], ["Pydantic", "pydantic"], ["Java", "openjdk"],
+    ["Estruturas de dados", "binary"], ["Git", "git"], ["GitHub", "github"], ["Netlify", "netlify"],
+  ] },
+  { group: "TI & Ferramentas", items: [
+    ["Hardware", "cpu"], ["Redes", "network"], ["Sistemas operacionais", "monitor"], ["Linux", "linux"],
+    ["Troubleshooting", "wrench"], ["Excel avançado", "file-spreadsheet"], ["Canva", "canva"], ["LGPD", "shield-check"],
+  ] },
 ];
 
-/* type: "work" | "edu" | "future"
-   Para adicionar um emprego futuro, mude type para "work" e preencha. */
-const TIMELINE = [
-  {
-    type: "future",
-    period: "Em breve",
-    title: "Próxima missão: Estágio em TI / Desenvolvimento",
-    place: "Sua empresa?",
-    desc: "Espaço reservado para a minha próxima experiência profissional. Se você está contratando, vamos conversar.",
-  },
-  {
-    type: "work",
-    period: "2026 — atual",
-    title: "Criador · StudyAI",
-    place: "Projeto pessoal",
-    desc: "Plataforma EdTech com Next.js, TypeScript e pipeline RAG (Gemini + pgvector/Supabase).",
-  },
-  {
-    type: "edu",
-    period: "2026 — 2029",
-    title: "Bacharelado em Sistemas de Informação",
-    place: "UNIFESSPA · Marabá, PA",
-    desc: "Estruturas de Dados (Java), Algoritmos, Arquitetura de Computadores, Matemática Discreta.",
-  },
-  {
-    type: "work",
-    period: "2024 — atual",
-    title: "Desenvolvedor Web Freelance",
-    place: "Marabá, PA",
-    desc: "Sites para negócios locais: Cumaru Interiores, Patas Vet e Áurea Estética.",
-  },
-  {
-    type: "work",
-    period: "2024 — atual",
-    title: "Fundador & Desenvolvedor · lu.ricos",
-    place: "Marabá, PA / Remoto",
-    desc: "Gestão end-to-end do e-commerce: sourcing, precificação, estoque, vendas multicanal, site e LU.BOT.",
-  },
+/* type: "open" = vaga futura (pontilhado). Troque quando conseguir o emprego. */
+const EXPERIENCE = [
+  { type: "open", period: "Próximo", role: "Estágio em TI / Desenvolvimento", place: "Aberto a oportunidades" },
+  { period: "2024 —", role: "Fundador & Desenvolvedor", place: "lu.ricos · Marabá, PA / Remoto" },
+  { period: "2024 —", role: "Desenvolvedor Web Freelance", place: "Negócios locais · Marabá, PA" },
+  { period: "2026 —", role: "Criador do StudyAI", place: "Projeto pessoal" },
 ];
 
-/* status: "concluido" | "andamento" | "futuro"
-   Adicione "url" para linkar a credencial e "image" para mostrar o certificado. */
+const EDUCATION = [
+  { period: "2026 — 2029", role: "Bacharelado em Sistemas de Informação", place: "UNIFESSPA · Marabá, PA" },
+];
+
+/* status: "done" | "progress" | "soon". Adicione url para a credencial. */
 const CERTS = [
-  { title: "Fundamentos de Suporte Técnico em TI", issuer: "Google · Coursera", year: "2026", status: "concluido", url: "" },
-  { title: "Pacote Office com foco em Excel", issuer: "Curso em Vídeo", year: "", status: "concluido", url: "" },
-  { title: "IBM Front-End Developer Professional Certificate", issuer: "IBM · Coursera", year: "", status: "andamento", url: "" },
-  { title: "Google Data Analytics", issuer: "Google · Coursera", year: "", status: "andamento", url: "" },
-  { title: "Novo certificado", issuer: "Em breve", year: "", status: "futuro", url: "" },
-  { title: "Novo certificado", issuer: "Em breve", year: "", status: "futuro", url: "" },
+  { title: "Fundamentos de Suporte Técnico em TI", issuer: "Google · Coursera", year: "2026", status: "done", url: "" },
+  { title: "Pacote Office com foco em Excel", issuer: "Curso em Vídeo", year: "", status: "done", url: "" },
+  { title: "IBM Front-End Developer Professional Certificate", issuer: "IBM · Coursera", year: "", status: "progress", url: "" },
+  { title: "Google Data Analytics", issuer: "Google · Coursera", year: "", status: "progress", url: "" },
 ];

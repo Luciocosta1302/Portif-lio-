@@ -1,9 +1,9 @@
 # 🚀 Lúcio Costa — Portfólio
 
-Portfólio pessoal com tema espacial: estrelas animadas, nebulosas, parallax e estrelas cadentes.
+Portfólio pessoal em estilo editorial quase monocromático, com uma viagem pelo espaço ao fundo: o scroll move a câmera entre estrelas e imagens do Hubble (NASA/ESA).
 HTML, CSS e JavaScript puros, sem build, pronto para o **GitHub Pages**.
 
-**Seções:** Sobre · Projetos (com filtros) · Designs (Canva) · Stack · Trajetória · Certificados (abas) · Contato
+**Seções:** Trabalhos selecionados (com miniaturas) · Outros projetos · Sobre + stack · Experiência · Formação · Certificados (abas) · Contato
 
 ## Como atualizar
 
@@ -11,10 +11,11 @@ Todo o conteúdo fica em **`data.js`**. Não precisa mexer no HTML.
 
 | Quero… | Edite em `data.js` |
 |---|---|
-| Adicionar um projeto | `PROJECTS` (use `links.live` para o site no ar) |
-| Adicionar um design do Canva | `DESIGNS` (use `image: "assets/designs/x.jpg"` para mostrar a capa real) |
-| Adicionar um emprego | `TIMELINE` com `type: "work"` (troque o item `future` quando conseguir a vaga) |
-| Adicionar um certificado | `CERTS` com `status: "concluido"`, `url` da credencial e `image` opcional |
+| Projeto com miniatura | `WORK` (imagem 1200×750 em `assets/projects/`, `live` e `code` opcionais) |
+| Projeto sem miniatura | `OTHER` |
+| Novo emprego | `EXPERIENCE` (substitua o item `type: "open"` quando conseguir a vaga) |
+| Novo certificado | `CERTS` com `status: "done"` e `url` da credencial |
+| Imagens do fundo | lista `OBJECTS` no topo de `script.js` (arquivos em `assets/space/`) |
 
 ## Publicar no GitHub Pages
 
