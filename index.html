@@ -20,24 +20,43 @@
     <canvas id="stars"></canvas>
     <div class="space" id="space"></div>
     <div class="veil"></div>
+    <div class="grain"></div>
   </div>
 
   <header class="top">
-    <a href="#inicio" class="brand">Lúcio Costa</a>
-    <nav class="nav" aria-label="Principal">
-      <a href="#trabalhos">Trabalhos</a>
-      <a href="#sobre">Sobre</a>
-      <a href="#experiencia">Experiência</a>
-      <a href="#certificados">Certificados</a>
-      <a href="#contato">Contato</a>
-    </nav>
-    <span class="clock mono" aria-label="Horário local em Marabá"><span id="clock">--:--</span> Marabá, BR</span>
-    <button class="menu-btn" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span></button>
+    <div class="hud-bar mono" aria-hidden="true">
+      <span><i>LOCAL::</i><b class="js-clock">--:--</b> BRT</span>
+      <span><i>STATUS::</i><b>ABERTO A ESTÁGIO</b></span>
+      <span class="hide-sm"><i>BASE::</i><b>MARABÁ · PA</b></span>
+      <span class="hide-sm"><i>FOCO::</i><b>WEB + IA</b></span>
+    </div>
+    <div class="top-row">
+      <a href="#inicio" class="brand" aria-label="Lúcio Costa, início"><span>L</span><span>C</span></a>
+      <nav class="nav" aria-label="Principal">
+        <a href="#trabalhos" data-roll="Trabalhos">Trabalhos</a>
+        <a href="#sobre" data-roll="Sobre">Sobre</a>
+        <a href="#experiencia" data-roll="Experiência">Experiência</a>
+        <a href="#certificados" data-roll="Certificados">Certificados</a>
+        <a href="#contato" data-roll="Contato">Contato</a>
+      </nav>
+      <a class="cta-pill" href="assets/curriculo-lucio-costa.pdf" download>Currículo ↓</a>
+      <button class="menu-btn" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
   </header>
+
+  <div class="hud-foot mono" aria-hidden="true">
+    <span>GMT-3 MARABÁ <b class="js-clock">--:--</b></span>
+    <span><b id="cx">0000</b> X <b id="cy">0000</b> Y</span>
+    <span>PROFUNDIDADE <b id="depth">000</b>%</span>
+  </div>
 
   <main id="inicio">
     <section class="hero wrap">
-      <p class="eyebrow mono">Desenvolvedor Web & IA · Estudante de Sistemas de Informação</p>
+      <div class="intro mono">
+        <p>Desenvolvedor<br />Web & IA</p>
+        <p>Pensando em sistemas.<br />Construindo com IA.</p>
+        <p>Estudante de Sistemas de Informação na UNIFESSPA, fundador da lu.ricos e desenvolvedor freelance para negócios locais.</p>
+      </div>
       <h1 class="hero-title">
         Lúcio Costa cria produtos web com IA,
         <span class="muted">de lojas virtuais a agentes que pensam, buscam e respondem.</span>
@@ -51,15 +70,15 @@
     </section>
 
     <section id="trabalhos" class="wrap section">
-      <div class="label"><h2>Trabalhos selecionados</h2><span class="mono count" id="work-count"></span></div>
+      <div class="label"><h2 data-scramble>Trabalhos selecionados</h2><span class="mono count" id="work-count"></span></div>
       <div class="work" id="work"></div>
 
-      <div class="label sub"><h2>Outros projetos</h2><span class="mono count" id="other-count"></span></div>
+      <div class="label sub"><h2 data-scramble>Outros projetos</h2><span class="mono count" id="other-count"></span></div>
       <ul class="rows" id="other"></ul>
     </section>
 
     <section id="sobre" class="wrap section about">
-      <div class="label"><h2>Sobre</h2></div>
+      <div class="label"><h2 data-scramble>Sobre</h2></div>
       <div class="about-grid">
         <figure class="about-photo">
           <img src="assets/img/lucio-formal.jpg" alt="Retrato de Lúcio Costa" loading="lazy" />
@@ -71,25 +90,34 @@
         </div>
       </div>
 
-      <div class="label sub"><h2>Linguagens & ferramentas</h2></div>
+      <div class="label sub"><h2 data-scramble>Linguagens & ferramentas</h2></div>
       <div class="stack" id="stack"></div>
     </section>
 
     <section id="experiencia" class="wrap section">
-      <div class="label"><h2>Experiência</h2></div>
+      <div class="label"><h2 data-scramble>Experiência</h2></div>
       <ul class="rows timeline" id="experience"></ul>
-      <div class="label sub"><h2>Formação</h2></div>
+      <div class="label sub"><h2 data-scramble>Formação</h2></div>
       <ul class="rows timeline" id="education"></ul>
     </section>
 
     <section id="certificados" class="wrap section">
-      <div class="label"><h2>Certificados</h2></div>
+      <div class="label"><h2 data-scramble>Certificados</h2></div>
       <div class="tabs mono" role="tablist" aria-label="Filtrar certificados">
         <button role="tab" class="tab active" aria-selected="true" data-tab="done">Concluídos</button>
         <button role="tab" class="tab" aria-selected="false" data-tab="progress">Em andamento</button>
         <button role="tab" class="tab" aria-selected="false" data-tab="soon">Em breve</button>
       </div>
       <ul class="rows certs" id="certs" role="tabpanel"></ul>
+    </section>
+
+    <section class="manifesto" id="manifesto" aria-label="Princípios">
+      <p class="m-big" data-scramble>Da ideia<br />ao deploy.</p>
+      <ul class="m-notes mono">
+        <li>Aprendo rápido.<br />Entrego cedo.</li>
+        <li>IA como ferramenta,<br />pessoas como foco.</li>
+        <li>Interfaces simples<br />para coisas complexas.</li>
+      </ul>
     </section>
 
     <section id="contato" class="wrap section contact">

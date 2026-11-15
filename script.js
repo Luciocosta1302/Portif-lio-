@@ -25,10 +25,11 @@
     { src: "gum19",     x: 0.36,  y: 0.2,   z: 5400, size: 900,  o: 0.5 },
     { src: "crab",      x: -0.3,  y: 0.1,   z: 6200, size: 1000, o: 0.5 },
     { src: "tadpoles",  x: 0.32,  y: -0.12, z: 7000, size: 1100, o: 0.45 },
-    { src: "moon-half", x: 0.12,  y: 0.42,  z: null, size: 1500, o: 0.4, full: true }, // fica no fim
+    { src: "moon-half", x: 0.12,  y: 0.42,  z: null, size: 1500, o: 0.4, full: true, far: 1000 }, // fica no fim
   ];
 
-  let W, H, dpr, mobile, maxCam = 1, cam = 0, target = 0, vel = 0, stars = [];
+  let W, H, dpr, mobile, maxCam = 1, cam = 0, target = 0, vel = 0, warp = 0, stars = [];
+  const manifesto = document.getElementById("manifesto");
 
   const els = OBJECTS.map((o) => {
     const img = new Image();
@@ -61,7 +62,8 @@
       const el = els[i];
       const z = (o.z ?? o.zAuto) * (o.z && maxCam < 7000 ? maxCam / 7000 : 1);
       const rel = z - cam;
-      if (rel < 40 || rel > 2600) { el.style.opacity = 0; return; }
+      const far = o.far || 2600;
+      if (rel < 40 || rel > far) { el.style.opacity = 0; return; }
       const k = F / rel;
       const w = o.size * scale * k;
       const ox = mobile && o.mx != null ? o.mx : o.x;
@@ -69,7 +71,7 @@
       const sx = W / 2 + ox * W * k * 1.4;
       const sy = H / 2 + oy * H * k * 1.4;
       // aparece ao longe, some ao passar pela câmera
-      const fadeIn = Math.min(1, (2600 - rel) / 900);
+      const fadeIn = Math.min(1, (far - rel) / (o.far ? 300 : 900));
       const fadeOut = Math.min(1, (rel - 40) / 260);
       el.style.opacity = (o.o * fadeIn * fadeOut).toFixed(3);
       el.style.width = o.size * scale + "px";
@@ -81,8 +83,8 @@
   function drawStars() {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
-    const speed = 0.35 + Math.max(-14, Math.min(14, vel * 1.6));            // parado: deriva lenta · scroll: acelera
-    const streak = Math.min(Math.abs(vel) * 5, 26);
+    const speed = 0.35 + Math.max(-14, Math.min(14, vel * 1.6)) + warp * 16;            // parado: deriva lenta · scroll: acelera
+    const streak = Math.max(Math.min(Math.abs(vel) * 5, 26), warp * 70);
     ctx.lineCap = "round";
     for (const s of stars) {
       s.z -= speed;
@@ -116,6 +118,12 @@
     const prev = cam;
     cam += (target - cam) * 0.08;               // câmera com inércia
     vel += ((cam - prev) - vel) * 0.25;
+    // perto da seção manifesto as estrelas entram em "dobra"
+    if (manifesto) {
+      const r = manifesto.getBoundingClientRect();
+      const d = Math.abs(r.top + r.height / 2 - H / 2) / H;
+      warp += (Math.max(0, 1 - d * 1.6) - warp) * 0.06;
+    }
     placeObjects();
     drawStars();
     requestAnimationFrame(frame);
@@ -144,10 +152,11 @@ const ext = 'target="_blank" rel="noopener"';
 
 /* ---------- Trabalhos ---------- */
 $("#work-count").textContent = `(${pad(WORK.length)})`;
-$("#work").innerHTML = WORK.map((p) => {
+$("#work").innerHTML = WORK.map((p, i) => {
   const href = p.live || p.code;
   const thumb = `<img src="${esc(p.image)}" alt="Prévia do projeto ${esc(p.title)}" loading="lazy" width="1200" height="750" />
-    ${!href ? `<span class="badge mono">Em breve</span>` : ""}`;
+    ${!href ? `<span class="badge mono">Em breve</span>` : ""}
+    ${p.chip ? `<span class="chip mono">${esc(p.chip)}</span>` : ""}`;
   const links = [
     p.live && `<a href="${esc(p.live)}" ${ext}>Site ↗</a>`,
     p.code && `<a href="${esc(p.code)}" ${ext}>Código ↗</a>`,
@@ -156,7 +165,8 @@ $("#work").innerHTML = WORK.map((p) => {
   <article class="project reveal">
     ${href ? `<a class="thumb" href="${esc(href)}" ${ext} data-cursor="${p.live ? "Ver site ↗" : "Ver código ↗"}">${thumb}</a>`
            : `<div class="thumb">${thumb}</div>`}
-    <div class="p-head"><h3>${esc(p.title)}</h3><span class="mono">${esc(p.year)}</span></div>
+    <span class="p-index mono">N°${pad(i + 1)} / ${pad(WORK.length)}</span>
+    <div class="p-head"><h3 data-scramble>${esc(p.title)}</h3><span class="mono">${esc(p.year)}</span></div>
     <p class="p-role">${esc(p.role)}</p>
     <p class="p-desc">${esc(p.desc)}</p>
     <div class="p-foot">
@@ -241,11 +251,54 @@ $$("[data-copy]").forEach((b) => b.addEventListener("click", async () => {
 }));
 
 /* ---------- Relógio local (Marabá = America/Belem) ---------- */
-const clock = $("#clock");
+const clocks = $$(".js-clock");
 const tick = () => {
-  clock.textContent = new Intl.DateTimeFormat("pt-BR", { hour: "2-digit", minute: "2-digit", timeZone: "America/Belem" }).format(new Date());
+  const t = new Intl.DateTimeFormat("pt-BR", { hour: "2-digit", minute: "2-digit", timeZone: "America/Belem" }).format(new Date());
+  clocks.forEach((c) => (c.textContent = t));
 };
 tick(); setInterval(tick, 20000);
+
+/* ---------- Rodapé HUD: cursor e profundidade ---------- */
+const cxEl = $("#cx"), cyEl = $("#cy"), depthEl = $("#depth");
+const p4 = (n) => String(Math.max(0, Math.round(n))).padStart(4, "0");
+addEventListener("pointermove", (e) => { cxEl.textContent = p4(e.clientX); cyEl.textContent = p4(e.clientY); }, { passive: true });
+const updDepth = () => {
+  const max = document.documentElement.scrollHeight - innerHeight;
+  depthEl.textContent = String(Math.round((scrollY / Math.max(1, max)) * 100)).padStart(3, "0");
+};
+addEventListener("scroll", updDepth, { passive: true }); updDepth();
+
+/* ---------- Texto que "decodifica" ao aparecer ---------- */
+const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&*+=/<>";
+const stillMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function scramble(el) {
+  if (stillMotion || el.dataset.done) return;
+  el.dataset.done = 1;
+  const nodes = [];
+  const walk = (n) => n.childNodes.forEach((c) => (c.nodeType === 3 ? nodes.push(c) : walk(c)));
+  walk(el);
+  const orig = nodes.map((n) => n.textContent);
+  const total = orig.reduce((a, t) => a + t.length, 0);
+  const dur = Math.min(900, 280 + total * 22);
+  const t0 = performance.now();
+  (function step(now) {
+    const p = Math.min(1, (now - t0) / dur);
+    let seen = 0;
+    nodes.forEach((n, k) => {
+      n.textContent = [...orig[k]].map((ch) => {
+        const idx = seen++;
+        if (ch === " " || idx / total < p) return ch;
+        return idx / total < p + 0.25 ? GLYPHS[(Math.random() * GLYPHS.length) | 0] : ch;
+      }).join("");
+    });
+    if (p < 1) requestAnimationFrame(step);
+    else nodes.forEach((n, k) => (n.textContent = orig[k]));
+  })(t0);
+}
+const sio = new IntersectionObserver((entries) => entries.forEach((en) => {
+  if (en.isIntersecting) { scramble(en.target); sio.unobserve(en.target); }
+}), { threshold: 0.6 });
+$$("[data-scramble]").forEach((el) => sio.observe(el));
 
 /* ---------- Topo, menu, link ativo ---------- */
 const topbar = $(".top");
@@ -264,6 +317,7 @@ $$(".nav a").forEach((a) => a.addEventListener("click", () => {
 }));
 
 const navLinks = $$(".nav a");
+navLinks.forEach((a) => { a.innerHTML = `<span>${a.textContent}</span>`; });
 const spy = new IntersectionObserver((entries) => entries.forEach((en) => {
   if (en.isIntersecting) navLinks.forEach((a) => a.classList.toggle("active", a.hash === `#${en.target.id}`));
 }), { rootMargin: "-40% 0px -55% 0px" });

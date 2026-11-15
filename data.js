@@ -9,6 +9,7 @@ const GITHUB = "https://github.com/Luciocosta1302";
 const WORK = [
   {
     title: "lu.ricos",
+    chip: "E-COMMERCE · IA",
     role: "Fundador · Design & Desenvolvimento",
     year: "2024 —",
     desc: "E-commerce de relógios com estética editorial, carrinho com checkout pelo WhatsApp e o LU.BOT, assistente de vendas com IA.",
@@ -19,6 +20,7 @@ const WORK = [
   },
   {
     title: "StudyAI",
+    chip: "EDTECH · RAG",
     role: "Produto pessoal · Em desenvolvimento",
     year: "2026",
     desc: "Plataforma de estudos que transforma PDFs em resumos, flashcards, simulados e um chat com o material, usando RAG.",
@@ -27,6 +29,7 @@ const WORK = [
   },
   {
     title: "Atlas AI",
+    chip: "AGENTE DE IA",
     role: "Agente de IA · Back-end",
     year: "2026",
     desc: "Agente que escolhe ferramentas, executa e observa. Memória em SQLite, streaming SSE e 103 testes automatizados.",
@@ -36,6 +39,7 @@ const WORK = [
   },
   {
     title: "Cumaru Interiores",
+    chip: "3D · CONCEITO",
     role: "Landing page conceito",
     year: "2026",
     desc: "Marcenaria amazônica fictícia com mesa 3D interativa. O modelo foi otimizado de 8,9 MB para 295 KB em Python.",
@@ -46,6 +50,7 @@ const WORK = [
   },
   {
     title: "Patas Vet",
+    chip: "SITE · CLIENTE",
     role: "Site institucional",
     year: "2026",
     desc: "Site para clínica veterinária em Belém, com serviços, depoimentos e agendamento direto pelo WhatsApp.",
@@ -56,6 +61,7 @@ const WORK = [
   },
   {
     title: "LivrosEbook",
+    chip: "AGENTE LITERÁRIO",
     role: "Agente literário · Claude Code",
     year: "2026",
     desc: "Agente de escrita de ficção com subagente, comandos próprios e bíblia do livro como memória entre capítulos.",
