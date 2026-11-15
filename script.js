@@ -12,20 +12,26 @@
   const F = 520;          // distância focal
   const DEPTH = 1.15;     // unidades de profundidade por px de scroll
 
-  /* x, y: posição relativa à tela (-0.5 a 0.5) · z: profundidade
-     size: largura em px quando está a 520 unidades da câmera
-     o: opacidade máxima · full: imagem sem máscara nas bordas */
+  /* x, y: posição relativa à tela (-0.5 a 0.5)
+     z: profundidade fixa · t: posição ao longo da página (0 = topo, 1 = fim)
+     size: largura em px a 520 unidades da câmera · o: opacidade máxima
+     spin: giro (graus por unidade de profundidade) · full: sem máscara nas bordas */
   const OBJECTS = [
     { src: "eclipse",   x: 0.30,  y: -0.06, mx: 0.5, my: -0.34, z: 1500, size: 2900, o: 0.55, full: true },
-    { src: "bipolar",   x: -0.42, y: 0.22,  z: 1500, size: 900,  o: 0.5 },
-    { src: "jewel",     x: 0.40,  y: -0.18, z: 2300, size: 700,  o: 0.55 },
-    { src: "lmc",       x: -0.05, y: 0.05,  z: 3100, size: 1500, o: 0.35 },
-    { src: "pillars",   x: 0.44,  y: 0.16,  z: 3800, size: 520,  o: 0.45 },
-    { src: "n49",       x: -0.38, y: -0.2,  z: 4600, size: 900,  o: 0.5 },
-    { src: "gum19",     x: 0.36,  y: 0.2,   z: 5400, size: 900,  o: 0.5 },
-    { src: "crab",      x: -0.3,  y: 0.1,   z: 6200, size: 1000, o: 0.5 },
-    { src: "tadpoles",  x: 0.32,  y: -0.12, z: 7000, size: 1100, o: 0.45 },
-    { src: "moon-half", x: 0.12,  y: 0.42,  z: null, size: 1500, o: 0.4, full: true, far: 1000 }, // fica no fim
+    { src: "bipolar",   x: -0.42, y: 0.22,  t: 0.05, size: 900,  o: 0.5 },
+    { src: "jewel",     x: 0.40,  y: -0.18, t: 0.11, size: 700,  o: 0.55 },
+    { src: "hourglass", x: -0.36, y: -0.16, t: 0.17, size: 760,  o: 0.5 },
+    { src: "lmc",       x: -0.05, y: 0.05,  t: 0.24, size: 1500, o: 0.32 },
+    { src: "saturn",    x: 0.38,  y: 0.14,  t: 0.31, size: 900,  o: 0.6, full: true, spin: -0.004 },
+    { src: "pillars",   x: -0.44, y: 0.16,  t: 0.37, size: 520,  o: 0.45 },
+    { src: "n49",       x: 0.38,  y: -0.2,  t: 0.44, size: 900,  o: 0.5 },
+    { src: "butterfly", x: -0.34, y: 0.06,  t: 0.51, size: 1000, o: 0.5 },
+    { src: "spiral",    x: 0.34,  y: 0.18,  t: 0.58, size: 1050, o: 0.55, spin: 0.012 },
+    { src: "gum19",     x: -0.38, y: -0.18, t: 0.65, size: 900,  o: 0.5 },
+    { src: "crab",      x: 0.3,   y: 0.1,   t: 0.72, size: 1000, o: 0.5 },
+    { src: "cluster",   x: -0.3,  y: 0.02,  t: 0.79, size: 900,  o: 0.4 },
+    { src: "tadpoles",  x: 0.32,  y: -0.12, t: 0.86, size: 1100, o: 0.45 },
+    { src: "moon-half", x: 0.12,  y: 0.42,  t: 1,   size: 1500, o: 0.4, full: true, far: 1000, end: 650 }, // fica no fim
   ];
 
   let W, H, dpr, mobile, maxCam = 1, cam = 0, target = 0, vel = 0, warp = 0, stars = [];
@@ -33,7 +39,7 @@
 
   const els = OBJECTS.map((o) => {
     const img = new Image();
-    img.src = `assets/space/${o.src}.jpg`;
+    img.dataset.src = `assets/space/${o.src}.jpg`;
     img.alt = "";
     img.decoding = "async";
     if (o.full) img.className = "full";
@@ -46,8 +52,8 @@
     dpr = Math.min(devicePixelRatio || 1, 2);
     canvas.width = W * dpr; canvas.height = H * dpr;
     maxCam = Math.max(1, (document.documentElement.scrollHeight - H) * DEPTH);
-    // a lua fica sempre um pouco à frente do fim do caminho
-    OBJECTS[OBJECTS.length - 1].zAuto = maxCam + 650;
+    // posições proporcionais ao comprimento da página; a lua fica logo depois do fim
+    OBJECTS.forEach((o) => { o.zAbs = o.z ?? (o.t * maxCam + (o.end ?? 900)); });
     sizeObjects();
     const n = mobile ? 220 : 480;
     stars = Array.from({ length: n }, () => newStar(Math.random() * 2000 + 20));
@@ -68,14 +74,15 @@
     const scale = mobile ? 0.6 : 1;
     OBJECTS.forEach((o, i) => {
       const el = els[i];
-      const z = (o.z ?? o.zAuto) * (o.z && maxCam < 7000 ? maxCam / 7000 : 1);
-      const rel = z - cam;
+      const rel = o.zAbs - cam;
       const far = o.far || 2600;
+      if (!el.src && rel < far + 1500) el.src = el.dataset.src; // carrega um pouco antes de aparecer
       let op = 0, t = last[i].t;
       // some antes de ficar enorme: nada cresce mais que 2,6x perto do texto
-      if (rel > 220 && rel < far) {
+      if (rel > 220 && rel < far && el.naturalWidth) {
         const k = Math.min(F / rel, 2.6);
-        const w = o.size * scale * k;
+        const w0 = o.size * scale;
+        const h0 = w0 * (el.naturalHeight / el.naturalWidth);
         const ox = mobile && o.mx != null ? o.mx : o.x;
         const oy = mobile && o.my != null ? o.my : o.y;
         const sx = W / 2 + ox * W * k * 1.4;
@@ -83,8 +90,8 @@
         const fadeIn = Math.min(1, (far - rel) / (o.far ? 300 : 900));
         const fadeOut = Math.min(1, (rel - 220) / 420);
         op = Math.round(o.o * fadeIn * fadeOut * 100) / 100;
-        const hgt = w * (el.naturalHeight / el.naturalWidth || 1);
-        t = `translate3d(${(sx - w / 2).toFixed(1)}px, ${(sy - hgt / 2).toFixed(1)}px, 0) scale(${k.toFixed(4)})`;
+        const rot = o.spin ? ` rotate(${(o.spin * rel).toFixed(2)}deg)` : "";
+        t = `translate3d(${(sx - w0 / 2).toFixed(1)}px, ${(sy - h0 / 2).toFixed(1)}px, 0) scale(${k.toFixed(4)})${rot}`;
       }
       if (op !== last[i].o) { el.style.opacity = op; last[i].o = op; }
       if (op > 0 && t !== last[i].t) { el.style.transform = t; last[i].t = t; }

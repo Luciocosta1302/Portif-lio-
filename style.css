@@ -40,7 +40,7 @@ ul { list-style: none; }
 .space { position: absolute; inset: 0; overflow: hidden; }
 .space img {
   position: absolute; left: 0; top: 0; max-width: none; opacity: 0;
-  transform-origin: 0 0; will-change: transform, opacity; backface-visibility: hidden;
+  transform-origin: 50% 50%; will-change: transform, opacity; backface-visibility: hidden;
   -webkit-mask-image: radial-gradient(closest-side, #000 45%, transparent 100%);
   mask-image: radial-gradient(closest-side, #000 45%, transparent 100%);
 }
