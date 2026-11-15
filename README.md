@@ -24,3 +24,8 @@ Settings → Pages → *Deploy from a branch* → escolha a branch e a pasta `/ 
 ## Rodar localmente
 
 Abra `index.html` no navegador, ou rode `python3 -m http.server` e acesse `http://localhost:8000`.
+
+## Ao publicar mudanças
+
+Os arquivos `style.css`, `icons.js`, `data.js` e `script.js` são carregados com `?v=...` no `index.html` e no `projetos.html`.
+Troque esse número a cada atualização para o navegador de quem visita não misturar arquivos novos com versões antigas guardadas em cache.
