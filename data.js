@@ -75,9 +75,6 @@ const WORK = [
 const OTHER = [
   { title: "Áurea Estética", desc: "Site para clínica de estética", stack: "HTML · CSS · JS", year: "2024" },
   { title: "Detector de golpes", desc: "Análise de mensagens suspeitas com LLM", stack: "JS · LLM API", year: "2025" },
-  { title: "Redesign do WhatsApp", desc: "Estudo de interface", stack: "UI", year: "2025" },
-  { title: "Sandbox 3D", desc: "Jogo de construção no navegador", stack: "Three.js", year: "2025" },
-  { title: "Jogo de plataforma", desc: "Jogo 2D no navegador", stack: "JavaScript", year: "2025" },
   { title: "Ciclo do Nitrogênio", desc: "Modelagem em grafos com BFS e Dijkstra · UNIFESSPA", stack: "Java", year: "2025" },
 ];
 
