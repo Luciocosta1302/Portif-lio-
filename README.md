@@ -1,6 +1,6 @@
 # 🚀 Lúcio Costa — Portfólio
 
-Portfólio pessoal em estilo editorial quase monocromático, com estrelas sutis e nebulosas do Hubble ao fundo.
+Portfólio pessoal em estilo editorial quase monocromático, com uma viagem pelo espaço ao fundo: o scroll move a câmera entre estrelas e imagens do Hubble (NASA/ESA).
 HTML, CSS e JavaScript puros, sem build, pronto para o **GitHub Pages**.
 
 **Seções:** Trabalhos selecionados (com miniaturas) · Outros projetos · Sobre + stack · Experiência · Formação · Certificados (abas) · Contato
@@ -15,7 +15,7 @@ Todo o conteúdo fica em **`data.js`**. Não precisa mexer no HTML.
 | Projeto sem miniatura | `OTHER` |
 | Novo emprego | `EXPERIENCE` (substitua o item `type: "open"` quando conseguir a vaga) |
 | Novo certificado | `CERTS` com `status: "done"` e `url` da credencial |
-| Imagem de fundo | salve uma foto da NASA como `assets/nebulas/hero.jpg` |
+| Imagens do fundo | lista `OBJECTS` no topo de `script.js` (arquivos em `assets/space/`) |
 
 ## Publicar no GitHub Pages
 

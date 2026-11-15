@@ -1,45 +1,138 @@
-/* ---------- Estrelas (sutis, sem efeitos chamativos) ---------- */
+/* =========================================================
+   VIAGEM PELO ESPAÇO
+   O scroll move uma "câmera" para frente. Estrelas e imagens
+   da NASA ficam em profundidades diferentes e passam por ela.
+   Tudo fica atrás de um véu escuro para não roubar a atenção.
+   ========================================================= */
 (() => {
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const canvas = document.getElementById("stars");
   const ctx = canvas.getContext("2d");
-  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let w, h, dpr, stars = [];
+  const layer = document.getElementById("space");
+  const F = 520;          // distância focal
+  const DEPTH = 1.15;     // unidades de profundidade por px de scroll
 
-  function resize() {
+  /* x, y: posição relativa à tela (-0.5 a 0.5) · z: profundidade
+     size: largura em px quando está a 520 unidades da câmera
+     o: opacidade máxima · full: imagem sem máscara nas bordas */
+  const OBJECTS = [
+    { src: "eclipse",   x: 0.30,  y: -0.06, mx: 0.5, my: -0.34, z: 560,  size: 1100, o: 0.55, full: true },
+    { src: "bipolar",   x: -0.42, y: 0.22,  z: 1500, size: 900,  o: 0.5 },
+    { src: "jewel",     x: 0.40,  y: -0.18, z: 2300, size: 700,  o: 0.55 },
+    { src: "lmc",       x: -0.05, y: 0.05,  z: 3100, size: 1500, o: 0.35 },
+    { src: "pillars",   x: 0.44,  y: 0.16,  z: 3800, size: 520,  o: 0.45 },
+    { src: "n49",       x: -0.38, y: -0.2,  z: 4600, size: 900,  o: 0.5 },
+    { src: "gum19",     x: 0.36,  y: 0.2,   z: 5400, size: 900,  o: 0.5 },
+    { src: "crab",      x: -0.3,  y: 0.1,   z: 6200, size: 1000, o: 0.5 },
+    { src: "tadpoles",  x: 0.32,  y: -0.12, z: 7000, size: 1100, o: 0.45 },
+    { src: "moon-half", x: 0.12,  y: 0.42,  z: null, size: 1500, o: 0.4, full: true }, // fica no fim
+  ];
+
+  let W, H, dpr, mobile, maxCam = 1, cam = 0, target = 0, vel = 0, stars = [];
+
+  const els = OBJECTS.map((o) => {
+    const img = new Image();
+    img.src = `assets/space/${o.src}.jpg`;
+    img.alt = "";
+    img.decoding = "async";
+    if (o.full) img.className = "full";
+    layer.appendChild(img);
+    return img;
+  });
+
+  function layout() {
+    W = innerWidth; H = innerHeight; mobile = W < 700;
     dpr = Math.min(devicePixelRatio || 1, 2);
-    w = canvas.width = innerWidth * dpr;
-    h = canvas.height = innerHeight * dpr;
-    const n = Math.round((innerWidth * innerHeight) / 5200);
-    stars = Array.from({ length: n }, () => ({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      r: (Math.random() ** 4 * 1.3 + 0.35) * dpr,
-      a: Math.random() * 0.6 + 0.2,
-      p: Math.random() * Math.PI * 2,
-      s: Math.random() * 0.6 + 0.2,
-      z: Math.random(),
-    }));
-    if (still) draw(0);
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    maxCam = Math.max(1, (document.documentElement.scrollHeight - H) * DEPTH);
+    // a lua fica sempre um pouco à frente do fim do caminho
+    OBJECTS[OBJECTS.length - 1].zAuto = maxCam + 650;
+    const n = mobile ? 260 : 520;
+    stars = Array.from({ length: n }, () => newStar(Math.random() * 2000 + 20));
   }
 
-  function draw(t) {
-    ctx.clearRect(0, 0, w, h);
-    const off = (scrollY * dpr) * 0.04;
-    ctx.fillStyle = "#dfe6f0";
+  function newStar(z) {
+    return { x: (Math.random() - 0.5) * 2600, y: (Math.random() - 0.5) * 1800, z, b: Math.random() * 0.7 + 0.3 };
+  }
+
+  function placeObjects() {
+    const scale = mobile ? 0.6 : 1;
+    OBJECTS.forEach((o, i) => {
+      const el = els[i];
+      const z = (o.z ?? o.zAuto) * (o.z && maxCam < 7000 ? maxCam / 7000 : 1);
+      const rel = z - cam;
+      if (rel < 40 || rel > 2600) { el.style.opacity = 0; return; }
+      const k = F / rel;
+      const w = o.size * scale * k;
+      const ox = mobile && o.mx != null ? o.mx : o.x;
+      const oy = mobile && o.my != null ? o.my : o.y;
+      const sx = W / 2 + ox * W * k * 1.4;
+      const sy = H / 2 + oy * H * k * 1.4;
+      // aparece ao longe, some ao passar pela câmera
+      const fadeIn = Math.min(1, (2600 - rel) / 900);
+      const fadeOut = Math.min(1, (rel - 40) / 260);
+      el.style.opacity = (o.o * fadeIn * fadeOut).toFixed(3);
+      el.style.width = o.size * scale + "px";
+      el.style.transform = `translate3d(${sx - w / 2}px, ${sy - (w * (el.naturalHeight / el.naturalWidth || 1)) / 2}px, 0) scale(${k})`;
+      el.style.transformOrigin = "0 0";
+    });
+  }
+
+  function drawStars() {
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    const speed = 0.35 + Math.max(-14, Math.min(14, vel * 1.6));            // parado: deriva lenta · scroll: acelera
+    const streak = Math.min(Math.abs(vel) * 5, 26);
+    ctx.lineCap = "round";
     for (const s of stars) {
-      let y = (s.y - off * (0.3 + s.z)) % h;
-      if (y < 0) y += h;
-      ctx.globalAlpha = still ? s.a : s.a * (0.65 + 0.35 * Math.sin(s.p + t * 0.0006 * s.s));
-      ctx.beginPath();
-      ctx.arc(s.x, y, s.r, 0, 6.283);
-      ctx.fill();
+      s.z -= speed;
+      if (s.z < 8) Object.assign(s, newStar(2000));
+      if (s.z > 2020) Object.assign(s, newStar(20));
+      const k = F / s.z;
+      const px = W / 2 + s.x * k, py = H / 2 + s.y * k;
+      if (px < -50 || px > W + 50 || py < -50 || py > H + 50) continue;
+      const near = 1 - s.z / 2000;
+      const a = Math.min(1, near * 1.3) * s.b * 0.85;
+      const r = Math.max(0.35, near * 1.6);
+      if (streak > 1.5) {
+        const k2 = F / Math.max(10, s.z + Math.sign(speed) * streak * 4);
+        ctx.strokeStyle = `rgba(222,230,240,${a * 0.55})`;
+        ctx.lineWidth = r;
+        ctx.beginPath();
+        ctx.moveTo(W / 2 + s.x * k2, H / 2 + s.y * k2);
+        ctx.lineTo(px, py);
+        ctx.stroke();
+      } else {
+        ctx.fillStyle = `rgba(222,230,240,${a})`;
+        ctx.beginPath();
+        ctx.arc(px, py, r, 0, 6.283);
+        ctx.fill();
+      }
     }
-    if (!still) requestAnimationFrame(draw);
   }
 
-  resize();
-  addEventListener("resize", resize);
-  if (!still) requestAnimationFrame(draw);
+  function frame() {
+    target = scrollY * DEPTH;
+    const prev = cam;
+    cam += (target - cam) * 0.08;               // câmera com inércia
+    vel += ((cam - prev) - vel) * 0.25;
+    placeObjects();
+    drawStars();
+    requestAnimationFrame(frame);
+  }
+
+  layout();
+  addEventListener("resize", layout);
+  addEventListener("load", layout);
+  els.forEach((el) => el.addEventListener("load", placeObjects));
+
+  if (still) {
+    cam = scrollY * DEPTH;
+    placeObjects(); drawStars();
+    addEventListener("scroll", () => { cam = scrollY * DEPTH; placeObjects(); }, { passive: true });
+  } else {
+    requestAnimationFrame(frame);
+  }
 })();
 
 /* ---------- Helpers ---------- */
@@ -152,7 +245,6 @@ tick(); setInterval(tick, 20000);
 const topbar = $(".top");
 addEventListener("scroll", () => {
   topbar.classList.toggle("scrolled", scrollY > 40);
-  document.documentElement.style.setProperty("--scroll", scrollY);
 }, { passive: true });
 
 const menuBtn = $(".menu-btn");

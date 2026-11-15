@@ -48,9 +48,10 @@ const WORK = [
     title: "Patas Vet",
     role: "Site institucional",
     year: "2026",
-    desc: "Site de clínica veterinária com serviços, depoimentos e agendamento direto pelo WhatsApp.",
+    desc: "Site para clínica veterinária em Belém, com serviços, depoimentos e agendamento direto pelo WhatsApp.",
     tags: ["HTML", "CSS", "JavaScript"],
     image: "assets/projects/patas-vet.jpg",
+    live: "https://luciocosta1302.github.io/patas-vet/",
     code: `${GITHUB}/patas-vet`,
   },
   {
