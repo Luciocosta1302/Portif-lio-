@@ -127,7 +127,7 @@ ul { list-style: none; }
 /* ---------- Hero ---------- */
 .hero {
   min-height: calc(100vh - 90px); display: grid; align-content: space-between;
-  grid-template-columns: 1fr minmax(240px, 380px); grid-template-areas: "intro intro" "copy photo";
+  grid-template-columns: 1fr minmax(180px, 260px); grid-template-areas: "intro intro" "copy photo";
   column-gap: clamp(32px, 6vw, 96px); row-gap: 48px; padding-top: 24px; padding-bottom: 96px;
 }
 .hero-copy { grid-area: copy; align-self: end; }
@@ -318,7 +318,7 @@ ul { list-style: none; }
 @media (max-width: 680px) {
   .work { grid-template-columns: 1fr; gap: 44px; }
   .hero {
-    min-height: 0; grid-template-columns: 124px 1fr; grid-template-areas: "photo intro" "copy copy";
+    min-height: 0; grid-template-columns: 92px 1fr; grid-template-areas: "photo intro" "copy copy";
     align-content: start; column-gap: 18px; row-gap: 32px; padding-top: 16px; padding-bottom: 64px;
   }
   .hero-photo { align-self: center; border-radius: 8px; }
