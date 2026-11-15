@@ -246,6 +246,37 @@ ul { list-style: none; }
 .tool svg[stroke] { color: var(--muted); }
 .tool:hover svg[stroke] { color: var(--text); }
 
+/* ---------- Fora do código ---------- */
+.life-intro { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(32px, 6vw, 96px); margin-bottom: 40px; }
+.life-intro .lede { color: var(--text); font-size: clamp(1.3rem, 2.4vw, 1.75rem); line-height: 1.3; letter-spacing: -0.02em; max-width: 18ch; }
+.life-text p { color: var(--muted); max-width: 58ch; }
+.life-text p + p { margin-top: 14px; }
+.hobbies { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+.hobbies li { padding: 5px 12px; border: 1px solid var(--line-2); border-radius: 999px; color: var(--text); font-size: 0.75rem; }
+.life-grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: clamp(220px, 26vw, 380px); gap: 16px; }
+.life-card { position: relative; margin: 0; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); }
+.life-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.1s var(--ease); }
+.life-card:hover img { transform: scale(1.03); }
+.life-card figcaption {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 64px 16px 14px; font-size: 0.9rem; line-height: 1.35;
+  background: linear-gradient(rgba(8, 9, 12, 0), rgba(8, 9, 12, 0.7) 45%, rgba(8, 9, 12, 0.92));
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}
+.life-card figcaption .mono { display: block; font-size: 0.66rem; letter-spacing: 0.04em; color: #b9bec7; margin-bottom: 4px; }
+.life-card.family { grid-column: span 7; }
+.life-card.family img { object-position: 50% 35%; }
+.life-card.volei { grid-column: span 5; }
+.life-card.volei img { object-position: 40% 40%; }
+.life-card.turma { grid-column: span 7; }
+.life-card.turma img { object-position: 50% 62%; }
+.life-quote {
+  grid-column: span 5; margin: 0; padding: 28px; border-radius: 10px; border: 1px solid var(--line);
+  background: rgba(15, 17, 22, 0.85); display: flex; flex-direction: column; justify-content: space-between;
+}
+.life-quote .mono { font-size: 0.66rem; letter-spacing: 0.04em; color: var(--dim); }
+.life-quote p { font-size: clamp(1.25rem, 2.2vw, 1.7rem); line-height: 1.3; letter-spacing: -0.02em; }
+.t-logo { display: inline-block; width: 30px; height: 30px; border-radius: 50%; margin-right: 12px; vertical-align: -9px; }
+
 /* ---------- Certificados ---------- */
 .tabs { display: flex; gap: 24px; margin-bottom: 8px; }
 .tab { color: var(--dim); padding: 6px 0; position: relative; transition: color 0.2s; }
@@ -305,6 +336,11 @@ ul { list-style: none; }
   .hud-foot span:nth-child(2) { display: none; }
   .menu-open .nav { opacity: 1; pointer-events: auto; transform: none; }
   .about-grid { grid-template-columns: 1fr; }
+  .life-intro { grid-template-columns: 1fr; gap: 20px; }
+  .life-grid { grid-template-columns: 1fr; grid-auto-rows: auto; }
+  .life-card, .life-quote { grid-column: auto !important; }
+  .life-card { aspect-ratio: 4 / 3; }
+  .life-quote { gap: 28px; }
   .about-photo { position: relative; top: 0; max-width: 420px; }
   .row { grid-template-columns: 1fr 80px; gap: 4px 16px; }
   .row > :nth-child(2) { grid-column: 1 / -1; grid-row: 2; }

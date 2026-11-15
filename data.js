@@ -108,7 +108,7 @@ const EXPERIENCE = [
 ];
 
 const EDUCATION = [
-  { period: "2026 — 2029", role: "Bacharelado em Sistemas de Informação", place: "UNIFESSPA · Marabá, PA" },
+  { period: "2026 — 2029", role: "Bacharelado em Sistemas de Informação", place: "UNIFESSPA · Marabá, PA", logo: "assets/img/unifesspa.png" },
 ];
 
 /* status: "done" | "progress" | "soon". Adicione url para a credencial. */

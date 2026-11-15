@@ -206,7 +206,7 @@ $("#stack").innerHTML = STACK.map((g) => `
 /* ---------- Experiência / formação ---------- */
 const timeline = (list) => list.map((e) => `
   <li class="reveal ${e.type === "open" ? "open" : ""}"><div class="row">
-    <span class="mono">${esc(e.period)}</span><span>${esc(e.role)}</span><span>${esc(e.place)}</span>
+    <span class="mono">${esc(e.period)}</span><span>${e.logo ? `<img class="t-logo" src="${esc(e.logo)}" alt="" width="28" height="28" />` : ""}${esc(e.role)}</span><span>${esc(e.place)}</span>
   </div></li>`).join("");
 $("#experience").innerHTML = timeline(EXPERIENCE);
 $("#education").innerHTML = timeline(EDUCATION);
