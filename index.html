@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lúcio Costa — Desenvolvedor Web & IA</title>
+  <meta name="description" content="Portfólio de Lúcio Henrique Ribeiro Costa — desenvolvedor web, IA generativa e estudante de Sistemas de Informação na UNIFESSPA." />
+  <meta property="og:title" content="Lúcio Costa — Desenvolvedor Web & IA" />
+  <meta property="og:description" content="Projetos, stack, designs e trajetória. Missão em andamento." />
+  <meta property="og:image" content="assets/img/lucio-mirante.jpg" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='7' fill='%237cc4ff'/%3E%3Cellipse cx='16' cy='16' rx='14' ry='5' fill='none' stroke='%23ff7ad9' stroke-width='2' transform='rotate(-25 16 16)'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Céu: estrelas (canvas) + nebulosas (CSS) -->
+  <div class="sky" aria-hidden="true">
+    <div class="nebula n1"></div>
+    <div class="nebula n2"></div>
+    <div class="nebula n3"></div>
+    <canvas id="stars"></canvas>
+  </div>
+
+  <header class="nav">
+    <a href="#top" class="logo" aria-label="Início">
+      <span class="logo-orb"></span> LC<span class="blink">_</span>
+    </a>
+    <nav>
+      <button class="menu-btn" aria-label="Abrir menu" aria-expanded="false">☰</button>
+      <ul class="menu">
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#projetos">Projetos</a></li>
+        <li><a href="#designs">Designs</a></li>
+        <li><a href="#stack">Stack</a></li>
+        <li><a href="#trajetoria">Trajetória</a></li>
+        <li><a href="#certificados">Certificados</a></li>
+        <li><a href="#contato" class="nav-cta">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-text">
+        <p class="mono tag"><span class="dot live"></span> MISSÃO LC-2026 · STATUS: EM ÓRBITA</p>
+        <h1>
+          Olá, eu sou <span class="grad">Lúcio Costa</span>.<br />
+          Construo produtos web<br />com <em>IA</em> no núcleo.
+        </h1>
+        <p class="lead">
+          Desenvolvedor web, fundador da <strong>lu.ricos</strong> e estudante de Sistemas de Informação na
+          UNIFESSPA. Transformo ideias em sites, apps e assistentes inteligentes — de Marabá, PA, para o mundo.
+        </p>
+        <div class="hero-actions">
+          <a href="#projetos" class="btn primary">Ver projetos ↗</a>
+          <a href="assets/curriculo-lucio-costa.pdf" class="btn ghost" download>Baixar currículo</a>
+        </div>
+        <ul class="telemetry mono">
+          <li><span>LAT</span> 5°22′S</li>
+          <li><span>LON</span> 49°07′W</li>
+          <li><span>BASE</span> Marabá · PA</li>
+          <li><span>MODO</span> Aberto a estágio</li>
+        </ul>
+      </div>
+      <div class="hero-visual">
+        <div class="orbit o1"><span class="sat"></span></div>
+        <div class="orbit o2"><span class="sat s2"></span></div>
+        <div class="portrait">
+          <img src="assets/img/lucio-mirante.jpg" alt="Lúcio Costa em um mirante com montanhas ao fundo" />
+        </div>
+        <div class="hud mono">
+          <span>CREW // 01</span>
+          <span>L.H.R. COSTA</span>
+        </div>
+      </div>
+      <a href="#sobre" class="scroll-hint mono" aria-label="Rolar para baixo">SCROLL ↓</a>
+    </section>
+
+    <!-- SOBRE -->
+    <section id="sobre" class="section">
+      <header class="sec-head">
+        <span class="mono idx">01</span>
+        <h2>Sobre</h2>
+        <p class="mono sub">// relatório da tripulação</p>
+      </header>
+      <div class="about">
+        <div class="about-photos">
+          <figure class="ph ph1"><img src="assets/img/lucio-formal.jpg" alt="Lúcio de terno e gravata verde" loading="lazy" /></figure>
+          <figure class="ph ph2"><img src="assets/img/lucio-cafe.jpg" alt="Lúcio sentado em um café" loading="lazy" /></figure>
+        </div>
+        <div class="about-text">
+          <p class="big">
+            Sou um dev curioso que aprende rápido, trabalha com autonomia e gosta de levar um produto
+            <span class="grad">do zero ao lançamento</span>.
+          </p>
+          <p>
+            Comecei empreendendo: criei a <strong>lu.ricos</strong>, um e-commerce de relógios onde cuido de tudo —
+            sourcing, precificação, estoque em Excel, atendimento e o próprio site, incluindo o
+            <strong>LU.BOT</strong>, um assistente de IA que recomenda produtos pelo perfil do cliente.
+          </p>
+          <p>
+            Hoje estudo Sistemas de Informação na UNIFESSPA, construo o <strong>StudyAI</strong> (EdTech com RAG)
+            e faço sites para negócios locais. Também tenho certificação Google em Suporte de TI e um olho
+            atento para design — boa parte das minhas apresentações nasce no Canva.
+          </p>
+          <div class="stats">
+            <div><b data-count="8">0</b><span>repositórios públicos</span></div>
+            <div><b data-count="3">0</b><span>sites para clientes</span></div>
+            <div><b data-count="2">0</b><span>anos construindo</span></div>
+            <div><b>3</b><span>idiomas · PT · EN · ES</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJETOS -->
+    <section id="projetos" class="section">
+      <header class="sec-head">
+        <span class="mono idx">02</span>
+        <h2>Projetos</h2>
+        <p class="mono sub">// missões lançadas</p>
+      </header>
+      <div class="filters mono" role="tablist" aria-label="Filtrar projetos">
+        <button class="chip active" data-filter="all">Todos</button>
+        <button class="chip" data-filter="ia">IA</button>
+        <button class="chip" data-filter="web">Web</button>
+        <button class="chip" data-filter="cliente">Clientes</button>
+        <button class="chip" data-filter="academico">Acadêmico</button>
+      </div>
+      <div class="projects" id="projects"></div>
+      <p class="more mono">
+        Tudo aberto em <a href="https://github.com/Luciocosta1302" target="_blank" rel="noopener">github.com/Luciocosta1302 ↗</a>
+      </p>
+    </section>
+
+    <!-- DESIGNS -->
+    <section id="designs" class="section">
+      <header class="sec-head">
+        <span class="mono idx">03</span>
+        <h2>Designs</h2>
+        <p class="mono sub">// apresentações & materiais visuais</p>
+      </header>
+      <p class="sec-intro">
+        Comunicação visual também é engenharia: apresentações acadêmicas, guias acessíveis e relatórios de
+        dados que desenhei no Canva.
+      </p>
+      <div class="designs" id="designs-grid"></div>
+    </section>
+
+    <!-- STACK -->
+    <section id="stack" class="section">
+      <header class="sec-head">
+        <span class="mono idx">04</span>
+        <h2>Stack</h2>
+        <p class="mono sub">// sistemas a bordo</p>
+      </header>
+      <div class="stack" id="stack-grid"></div>
+    </section>
+
+    <!-- TRAJETÓRIA -->
+    <section id="trajetoria" class="section">
+      <header class="sec-head">
+        <span class="mono idx">05</span>
+        <h2>Trajetória</h2>
+        <p class="mono sub">// log de voo</p>
+      </header>
+      <ol class="timeline" id="timeline"></ol>
+    </section>
+
+    <!-- CERTIFICADOS -->
+    <section id="certificados" class="section">
+      <header class="sec-head">
+        <span class="mono idx">06</span>
+        <h2>Certificados</h2>
+        <p class="mono sub">// insígnias de missão</p>
+      </header>
+      <div class="tabs mono" role="tablist" aria-label="Certificados">
+        <button class="tab active" role="tab" aria-selected="true" data-tab="concluido">Concluídos</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="andamento">Em andamento</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="futuro">Próximos</button>
+      </div>
+      <div class="certs" id="certs" role="tabpanel"></div>
+    </section>
+
+    <!-- CONTATO -->
+    <section id="contato" class="section contact">
+      <p class="mono tag"><span class="dot live"></span> CANAL ABERTO</p>
+      <h2 class="contact-title">Vamos construir<br /><span class="grad">a próxima missão?</span></h2>
+      <p class="lead">Estou aberto a estágio em TI / desenvolvimento, freelas e projetos com IA.</p>
+      <div class="contact-links">
+        <a class="btn primary" href="mailto:luciohrcosta@gmail.com">luciohrcosta@gmail.com</a>
+        <a class="btn ghost" href="https://www.linkedin.com/in/luciohrcosta" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn ghost" href="https://github.com/Luciocosta1302" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer mono">
+    <span>© <span id="year"></span> Lúcio Henrique Ribeiro Costa</span>
+    <span>Feito à mão com HTML, CSS & JS · Hospedado no GitHub Pages</span>
+    <a href="#top">Voltar ao topo ↑</a>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
