@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Todos os projetos — Lúcio Costa</title>
+  <meta name="description" content="Todos os projetos de Lúcio Costa: sites, e-commerce, agentes de IA e projetos acadêmicos." />
+  <meta property="og:title" content="Lúcio Costa — Desenvolvedor Web & IA" />
+  <meta property="og:description" content="Produtos web com IA, de lojas virtuais a agentes inteligentes." />
+  <meta property="og:image" content="assets/projects/luricos.jpg" />
+  <meta name="theme-color" content="#08090c" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="sky" aria-hidden="true">
+    <canvas id="stars"></canvas>
+    <div class="space" id="space"></div>
+    <div class="veil"></div>
+    <div class="grain"></div>
+  </div>
+
+  <header class="top">
+    <div class="hud-bar mono" aria-hidden="true">
+      <span><i>LOCAL::</i><b class="js-clock">--:--</b> BRT</span>
+      <span><i>STATUS::</i><b>ABERTO A ESTÁGIO</b></span>
+      <span class="hide-sm"><i>BASE::</i><b>MARABÁ · PA</b></span>
+      <span class="hide-sm"><i>FOCO::</i><b>WEB + IA</b></span>
+    </div>
+    <div class="top-row">
+      <a href="index.html" class="brand" aria-label="Lúcio Costa, início"><span>L</span><span>C</span></a>
+      <nav class="nav" aria-label="Principal">
+        <a href="index.html#trabalhos" data-roll="Trabalhos">Trabalhos</a>
+        <a href="index.html#sobre" data-roll="Sobre">Sobre</a>
+        <a href="index.html#experiencia" data-roll="Experiência">Experiência</a>
+        <a href="index.html#certificados" data-roll="Certificados">Certificados</a>
+        <a href="index.html#contato" data-roll="Contato">Contato</a>
+      </nav>
+      <a class="cta-pill" href="assets/curriculo-lucio-costa.pdf" download>Currículo ↓</a>
+      <button class="menu-btn" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="hud-foot mono" aria-hidden="true">
+    <span>GMT-3 MARABÁ <b class="js-clock">--:--</b></span>
+    <span><b id="cx">0000</b> X <b id="cy">0000</b> Y</span>
+    <span>PROFUNDIDADE <b id="depth">000</b>%</span>
+  </div>
+
+  <main id="topo">
+    <section class="wrap page-head">
+      <a class="back mono" href="index.html#trabalhos">← Voltar ao início</a>
+      <h1 class="page-title" data-scramble>Todos os projetos</h1>
+      <p class="page-intro">Sites, e-commerce, agentes de IA e projetos acadêmicos. Clique na imagem para abrir o site ou o código.</p>
+    </section>
+
+    <section class="wrap section">
+      <div class="label"><h2 data-scramble>Trabalhos selecionados</h2><span class="mono count" id="work-count"></span></div>
+      <div class="work" id="work"></div>
+
+      <div class="label sub"><h2 data-scramble>Outros projetos</h2><span class="mono count" id="other-count"></span></div>
+      <ul class="rows" id="other"></ul>
+    </section>
+  </main>
+
+  <footer class="wrap footer mono">
+    <span>© <span id="year"></span> Lúcio Henrique Ribeiro Costa</span>
+    <span>Imagens de fundo: NASA, ESA / Hubble</span>
+    <a href="#topo">Voltar ao topo ↑</a>
+  </footer>
+
+  <div class="cursor mono" aria-hidden="true">Ver projeto ↗</div>
+
+  <script src="icons.js"></script>
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

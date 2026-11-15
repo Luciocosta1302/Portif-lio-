@@ -162,16 +162,20 @@ const pad = (n) => String(n).padStart(2, "0");
 const ext = 'target="_blank" rel="noopener"';
 
 /* ---------- Trabalhos ---------- */
-$("#work-count").textContent = `(${pad(WORK.length)})`;
-$("#work").innerHTML = WORK.map((p, i) => {
+const fill = (sel, html) => { const el = $(sel); if (el) el.innerHTML = html; return el; };
+const linksOf = (p) => [
+  p.live && `<a href="${esc(p.live)}" ${ext}>Site ↗</a>`,
+  p.code && `<a href="${esc(p.code)}" ${ext}>Código ↗</a>`,
+].filter(Boolean).join("");
+
+/* Grade completa (página Todos os projetos) */
+fill("#work-count", `(${pad(WORK.length)})`);
+fill("#work", WORK.map((p, i) => {
   const href = p.live || p.code;
   const thumb = `<img src="${esc(p.image)}" alt="Prévia do projeto ${esc(p.title)}" loading="lazy" width="1200" height="750" />
     ${!href ? `<span class="badge mono">Em breve</span>` : ""}
     ${p.chip ? `<span class="chip mono">${esc(p.chip)}</span>` : ""}`;
-  const links = [
-    p.live && `<a href="${esc(p.live)}" ${ext}>Site ↗</a>`,
-    p.code && `<a href="${esc(p.code)}" ${ext}>Código ↗</a>`,
-  ].filter(Boolean).join("");
+  const links = linksOf(p);
   return `
   <article class="project reveal">
     ${href ? `<a class="thumb" href="${esc(href)}" ${ext} data-cursor="${p.live ? "Ver site ↗" : "Ver código ↗"}">${thumb}</a>`
@@ -185,31 +189,134 @@ $("#work").innerHTML = WORK.map((p, i) => {
       ${links ? `<span class="p-links mono">${links}</span>` : ""}
     </div>
   </article>`;
-}).join("");
+}).join(""));
 
-$("#other-count").textContent = `(${pad(OTHER.length)})`;
-$("#other").innerHTML = OTHER.map((p) => `
+fill("#other-count", `(${pad(OTHER.length)})`);
+fill("#other", OTHER.map((p) => `
   <li class="reveal"><div class="row">
     <span>${esc(p.title)}</span><span>${esc(p.desc)}</span><span class="mono">${esc(p.stack)}</span><span class="mono">${esc(p.year)}</span>
-  </div></li>`).join("");
+  </div></li>`).join(""));
+
+
+/* =========================================================
+   VITRINE DE TRABALHOS
+   A seção fica presa na tela enquanto o scroll avança. Cada
+   projeto vem do fundo do espaço, para no centro e passa pela
+   câmera. O texto embaixo troca junto com o projeto ativo.
+   ========================================================= */
+(() => {
+  const track = $("#showcase");
+  if (!track) return;
+  const n = WORK.length;
+  track.style.setProperty("--n", n);
+  const cardsEl = $("#sc-cards");
+  cardsEl.innerHTML = WORK.map((p, i) => {
+    const href = p.live || p.code;
+    const open = href ? `a href="${esc(href)}" ${ext} data-cursor="${p.live ? "Ver site ↗" : "Ver código ↗"}"` : "div";
+    const close = href ? "a" : "div";
+    return `<${open} class="sc-card" data-i="${i}" aria-label="${esc(p.title)}">
+      <img src="${esc(p.image)}" alt="Prévia do projeto ${esc(p.title)}" width="1200" height="750" ${i > 1 ? 'loading="lazy"' : ""} />
+      ${p.chip ? `<span class="chip mono">${esc(p.chip)}</span>` : ""}
+      ${!href ? `<span class="badge mono">Em breve</span>` : ""}
+    </${close}>`;
+  }).join("");
+  const cards = $$(".sc-card", cardsEl);
+  $("#sc-total").textContent = pad(n);
+  $("#sc-dots").innerHTML = WORK.map((p, i) => `<button role="tab" aria-label="${esc(p.title)}" data-i="${i}"></button>`).join("");
+  const dots = $$("#sc-dots button");
+  const box = $(".sc-info");
+  const info = {
+    index: $("#sc-index"), title: $("#sc-title"), role: $("#sc-role"),
+    desc: $("#sc-desc"), tags: $("#sc-tags"), links: $("#sc-links"), now: $("#sc-now"),
+  };
+
+  let shown = -1;
+  function showInfo(i) {
+    if (i === shown) return;
+    shown = i;
+    const p = WORK[i];
+    box.classList.remove("swap"); void box.offsetWidth; box.classList.add("swap");
+    info.index.textContent = `N°${pad(i + 1)} / ${pad(n)} · ${p.year}`;
+    info.title.textContent = p.title;
+    info.role.textContent = p.role;
+    info.desc.textContent = p.desc;
+    info.tags.textContent = p.tags.join(" · ");
+    info.links.innerHTML = linksOf(p);
+    info.now.textContent = pad(i + 1);
+    delete info.title.dataset.done;
+    scramble(info.title);
+    dots.forEach((d, k) => d.setAttribute("aria-selected", k === i));
+    cards.forEach((c, k) => { c.tabIndex = k === i ? 0 : -1; c.style.pointerEvents = k === i ? "auto" : "none"; });
+  }
+
+  const progress = () => {
+    const r = track.getBoundingClientRect();
+    const span = Math.max(1, r.height - innerHeight);
+    return Math.min(1, Math.max(0, -r.top / span)) * (n - 1);
+  };
+  const stillM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let cur = progress(), running = false;
+
+  function place() {
+    const mobile = innerWidth < 700;
+    cards.forEach((c, i) => {
+      const d = i - cur, ad = Math.abs(d);
+      let tx, ty, tz, ry, rz, op;
+      if (d >= 0) { // ainda vem do fundo
+        tx = d * (mobile ? 16 : 24); ty = -d * 3; tz = -d * 650; ry = -d * 16; rz = d * 3; op = 1 - d * 0.4;
+      } else {      // já passou pela câmera
+        tx = d * (mobile ? 90 : 70); ty = -d * 2; tz = -d * 380; ry = -d * 30; rz = d * 6; op = 1 - Math.pow(ad, 1.7) * 2.2;
+      }
+      op = Math.max(0, Math.min(1, op));
+      c.style.opacity = op.toFixed(3);
+      c.style.visibility = op < 0.01 ? "hidden" : "visible";
+      c.style.zIndex = String(100 - Math.round(ad * 10));
+      c.style.transform = `translate(-50%, -50%) translate3d(${tx.toFixed(2)}vw, ${ty.toFixed(2)}vh, ${tz.toFixed(1)}px) rotateY(${ry.toFixed(2)}deg) rotateZ(${rz.toFixed(2)}deg)`;
+    });
+    showInfo(Math.round(cur));
+  }
+
+  function loop() {
+    const target = progress();
+    cur += (target - cur) * (stillM ? 1 : 0.12);
+    if (Math.abs(target - cur) < 0.0005) cur = target;
+    place();
+    if (running) requestAnimationFrame(loop);
+  }
+  new IntersectionObserver(([en]) => {
+    const was = running;
+    running = en.isIntersecting;
+    if (running && !was) requestAnimationFrame(loop);
+  }).observe(track);
+  // a primeira exibição espera o resto do script (scramble) estar pronto
+  queueMicrotask(place);
+
+  // pontos: levam o scroll até o projeto escolhido
+  dots.forEach((d) => d.addEventListener("click", () => {
+    const i = +d.dataset.i;
+    const top = track.getBoundingClientRect().top + scrollY;
+    const span = track.offsetHeight - innerHeight;
+    scrollTo({ top: top + (span * i) / (n - 1) + 1, behavior: stillM ? "auto" : "smooth" });
+  }));
+})();
 
 /* ---------- Sobre: stack ---------- */
-$("#stack").innerHTML = STACK.map((g) => `
+fill("#stack", STACK.map((g) => `
   <div class="stack-group reveal">
     <h3>${esc(g.group)}</h3>
     <ul class="tools">${g.items.map(([name, key]) => {
       const ic = ICONS[key] || { svg: "", color: "" };
       return `<li class="tool" style="--c:${ic.color}">${ic.svg}<span>${esc(name)}</span></li>`;
     }).join("")}</ul>
-  </div>`).join("");
+  </div>`).join(""));
 
 /* ---------- Experiência / formação ---------- */
 const timeline = (list) => list.map((e) => `
   <li class="reveal ${e.type === "open" ? "open" : ""}"><div class="row">
     <span class="mono">${esc(e.period)}</span><span>${e.logo ? `<img class="t-logo" src="${esc(e.logo)}" alt="" width="28" height="28" />` : ""}${esc(e.role)}</span><span>${esc(e.place)}</span>
   </div></li>`).join("");
-$("#experience").innerHTML = timeline(EXPERIENCE);
-$("#education").innerHTML = timeline(EDUCATION);
+fill("#experience", timeline(EXPERIENCE));
+fill("#education", timeline(EDUCATION));
 
 /* ---------- Certificados com abas ---------- */
 const certCount = (s) => CERTS.filter((c) => c.status === s).length;
@@ -231,13 +338,13 @@ function renderCerts(tab) {
     rows.push(`<li class="empty"><div class="row" style="animation-delay:${i * 60}ms">
       <span>Espaço reservado para um novo certificado</span><span>—</span><span class="mono">Em breve</span></div></li>`);
   }
-  $("#certs").innerHTML = rows.join("");
+  fill("#certs", rows.join(""));
 }
 $$(".tab").forEach((t) => t.addEventListener("click", () => {
   $$(".tab").forEach((b) => { b.classList.toggle("active", b === t); b.setAttribute("aria-selected", b === t); });
   renderCerts(t.dataset.tab);
 }));
-renderCerts("done");
+if ($("#certs")) renderCerts("done");
 
 /* ---------- Cursor com rótulo nas miniaturas ---------- */
 const cursor = $(".cursor");
@@ -272,10 +379,10 @@ tick(); setInterval(tick, 20000);
 /* ---------- Rodapé HUD: cursor e profundidade ---------- */
 const cxEl = $("#cx"), cyEl = $("#cy"), depthEl = $("#depth");
 const p4 = (n) => String(Math.max(0, Math.round(n))).padStart(4, "0");
-addEventListener("pointermove", (e) => { cxEl.textContent = p4(e.clientX); cyEl.textContent = p4(e.clientY); }, { passive: true });
+addEventListener("pointermove", (e) => { if (cxEl) { cxEl.textContent = p4(e.clientX); cyEl.textContent = p4(e.clientY); } }, { passive: true });
 const updDepth = () => {
   const max = document.documentElement.scrollHeight - innerHeight;
-  depthEl.textContent = String(Math.round((scrollY / Math.max(1, max)) * 100)).padStart(3, "0");
+  if (depthEl) depthEl.textContent = String(Math.round((scrollY / Math.max(1, max)) * 100)).padStart(3, "0");
 };
 addEventListener("scroll", updDepth, { passive: true }); updDepth();
 
@@ -340,4 +447,4 @@ const io = new IntersectionObserver((entries) => entries.forEach((en) => {
 }), { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
 $$(".reveal, .label, .about-grid, .contact > *").forEach((el) => { el.classList.add("reveal"); io.observe(el); });
 
-$("#year").textContent = new Date().getFullYear();
+fill("#year", new Date().getFullYear());

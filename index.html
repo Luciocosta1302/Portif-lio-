@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -76,12 +76,27 @@
       </div>
     </section>
 
-    <section id="trabalhos" class="wrap section">
-      <div class="label"><h2 data-scramble>Trabalhos selecionados</h2><span class="mono count" id="work-count"></span></div>
-      <div class="work" id="work"></div>
-
-      <div class="label sub"><h2 data-scramble>Outros projetos</h2><span class="mono count" id="other-count"></span></div>
-      <ul class="rows" id="other"></ul>
+    <section id="trabalhos" class="showcase">
+      <div class="wrap">
+        <div class="label"><h2 data-scramble>Trabalhos selecionados</h2><a class="mono label-link" href="projetos.html">Ver todos →</a></div>
+      </div>
+      <div class="sc-track" id="showcase">
+        <div class="sc-stage">
+          <div class="sc-cards" id="sc-cards"></div>
+          <div class="sc-info wrap" aria-live="polite">
+            <span class="sc-index mono" id="sc-index"></span>
+            <h3 class="sc-title" id="sc-title"></h3>
+            <p class="sc-role" id="sc-role"></p>
+            <p class="sc-desc" id="sc-desc"></p>
+            <div class="sc-foot"><span class="mono sc-tags" id="sc-tags"></span><span class="mono p-links" id="sc-links"></span></div>
+          </div>
+          <div class="sc-bar wrap">
+            <span class="mono sc-count"><b id="sc-now">01</b> / <span id="sc-total">06</span></span>
+            <div class="sc-dots" id="sc-dots" role="tablist" aria-label="Escolher projeto"></div>
+            <a class="sc-all" href="projetos.html">Ver todos os projetos <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section id="sobre" class="wrap section about">
@@ -91,9 +106,10 @@
           <img src="assets/img/lucio-formal.jpg" alt="Retrato de Lúcio Costa" loading="lazy" />
         </figure>
         <div class="about-text">
-          <p class="lede">Sou de Marabá, no Pará. Comecei vendendo relógios e acabei construindo a loja inteira: o site, o estoque e um assistente de IA que atende os clientes.</p>
-          <p>Hoje estudo Sistemas de Informação na UNIFESSPA e passo a maior parte do tempo entre front-end e IA aplicada: RAG, agentes com ferramentas e interfaces simples para coisas complexas. Também faço sites para negócios locais e tenho certificação Google em Suporte de TI.</p>
-          <p>Gosto de levar uma ideia do rascunho até o deploy, de aprender rápido e de trabalhar com autonomia.</p>
+          <p class="lede">Sou de Marabá, no Pará, e sempre gostei de duas coisas: entender como as coisas funcionam e deixar elas bonitas.</p>
+          <p>O design chegou antes do código. Desde sempre eu reparo em logos, capas, cores e telas, e fico pensando em como faria do meu jeito. Foi esse olhar que me levou a programar: eu queria que as ideias saíssem do papel e funcionassem de verdade.</p>
+          <p>A lu.ricos nasceu de um gosto pessoal: relógios. Comecei com poucas peças e, quando vi, estava cuidando de tudo: escolher os modelos, definir preço, controlar o estoque na planilha e atender cliente no Instagram, no WhatsApp e no Mercado Livre. Faltava um site à altura, então eu mesmo fiz. Depois veio o LU.BOT, um assistente de IA que conversa com o cliente e indica o relógio que combina com ele.</p>
+          <p>Foi ali que eu entendi o que eu gosto de fazer: juntar design, código e IA para resolver um problema de verdade. Hoje estudo Sistemas de Informação na UNIFESSPA, faço sites para negócios locais e sigo construindo projetos como o StudyAI.</p>
         </div>
       </div>
 
@@ -104,7 +120,7 @@
           <p>Minha família é minha base. Foi com ela e com a minha fé que aprendi a levar as coisas a sério sem perder a leveza.</p>
           <p>Na UNIFESSPA, faço parte da turma de Sistemas de Informação de 2026. É com ela que encaro Matemática Discreta, Estruturas de Dados e os primeiros projetos em equipe.</p>
           <p>Jogo vôlei e acompanho a seleção de perto. No Mundial de Clubes de vôlei masculino em Belém, em 2025, fui com meus amigos e meu pai e conheci meus ídolos, entre eles o Bruninho, levantador da seleção brasileira.</p>
-          <p>E gosto de design: apresentações, identidade visual e interfaces. Muita coisa que eu programo começa como um rascunho visual.</p>
+          <p>E o design continua sendo diversão: no tempo livre eu monto apresentações, testo identidades visuais e fico ajustando detalhe até ficar do jeito que eu imaginei.</p>
           <ul class="hobbies mono"><li>Vôlei</li><li>Design</li><li>Família</li><li>Fé</li><li>Tecnologia</li></ul>
         </div>
       </div>
@@ -123,7 +139,7 @@
         </figure>
         <blockquote class="life-quote reveal">
           <span class="mono">NO QUE EU ACREDITO</span>
-          <p>“Jesus não é apenas um caminho para se aproximar de Deus, é o único caminho.”</p>
+          <p>Jesus não é apenas um caminho para se aproximar de Deus, <em>é o único caminho.</em></p>
         </blockquote>
       </div>
 
