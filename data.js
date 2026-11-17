@@ -19,13 +19,15 @@ const WORK = [
     code: `${GITHUB}/Lu.Ricos`,
   },
   {
-    title: "StudyAI",
-    chip: "EDTECH · RAG",
-    role: "Produto pessoal · Em desenvolvimento",
+    title: "Gabarita",
+    chip: "EDTECH · IA",
+    role: "Produto completo · Design & Desenvolvimento",
     year: "2026",
-    desc: "Plataforma de estudos que transforma PDFs em resumos, flashcards, simulados e um chat com o material, usando RAG.",
-    tags: ["Next.js", "TypeScript", "Gemini", "pgvector"],
-    image: "assets/projects/studyai.jpg",
+    desc: "App de estudo com IA: o aluno manda o material e a data da prova e recebe um plano até o dia, questões com a página de onde saíram, gabarito conferido e caderno de erros.",
+    tags: ["Next.js", "TypeScript", "Supabase", "Gemini", "pgvector"],
+    image: "assets/projects/gabarita.jpg",
+    live: "https://gabarita-6wt6.vercel.app",
+    code: `${GITHUB}/Gabarita`,
   },
   {
     title: "Atlas AI",
@@ -104,7 +106,7 @@ const EXPERIENCE = [
   { type: "open", period: "Próximo", role: "Estágio em TI / Desenvolvimento", place: "Aberto a oportunidades" },
   { period: "2024 —", role: "Fundador & Desenvolvedor", place: "lu.ricos · Marabá, PA / Remoto" },
   { period: "2024 —", role: "Desenvolvedor Web Freelance", place: "Negócios locais · Marabá, PA" },
-  { period: "2026 —", role: "Criador do StudyAI", place: "Projeto pessoal" },
+  { period: "2026 —", role: "Criador do Gabarita", place: "Projeto pessoal · app de estudos com IA" },
 ];
 
 const EDUCATION = [
