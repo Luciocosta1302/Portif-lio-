@@ -461,3 +461,7 @@ ul { list-style: none; }
   .reveal { opacity: 1; transform: none; }
   html { scroll-behavior: auto; }
 }
+
+.cert-ic { display: inline-flex; vertical-align: -3px; margin-right: 8px; }
+.cert-ic svg { width: 16px; height: 16px; color: var(--c, var(--text)); }
+.cert-ic svg[stroke] { color: var(--muted); }

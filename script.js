@@ -337,7 +337,7 @@ function renderCerts(tab) {
   const rows = list.map((c, i) => `
     <li><div class="row" style="animation-delay:${i * 60}ms">
       <span>${esc(c.title)}</span>
-      <span>${esc(c.issuer)}${c.year ? " · " + esc(c.year) : ""}</span>
+      <span>${c.icon && ICONS[c.icon] ? `<i class="cert-ic" style="--c:${ICONS[c.icon].color}">${ICONS[c.icon].svg}</i>` : ""}${esc(c.issuer)}${c.year ? " · " + esc(c.year) : ""}</span>
       <span class="mono">${c.url ? `<a href="${esc(c.url)}" ${ext}>Credencial ↗</a>` : tab === "progress" ? "Em curso" : "Concluído"}</span>
     </div></li>`);
   const slots = Math.max(tab === "soon" ? 3 : 0, 0);

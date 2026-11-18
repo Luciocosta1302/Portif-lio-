@@ -115,11 +115,11 @@ const EDUCATION = [
 
 /* status: "done" | "progress" | "soon". Adicione url para a credencial. */
 const CERTS = [
-  { title: "Claude 101", issuer: "Anthropic", year: "2026", status: "done", url: "https://verify.skilljar.com/c/en7nvct9noaw" },
-  { title: "AI Fluency for Students", issuer: "Anthropic", year: "2026", status: "done", url: "https://verify.skilljar.com/c/7m5sweobzpdd" },
-  { title: "Foundations: Data, Data, Everywhere", issuer: "Google · Coursera", year: "2026", status: "done", url: "https://www.coursera.org/account/accomplishments/records/RBBSDJBRRH0E" },
-  { title: "Excel [40 horas]", issuer: "Curso em Vídeo", year: "2026", status: "done", url: "https://www.cursoemvideo.com/certificates/certificado/?course_id=25933&cert-nonce=3921245bac" },
-  { title: "Fundamentos de Suporte Técnico em TI", issuer: "Google · Coursera", year: "2026", status: "done", url: "https://www.coursera.org/account/accomplishments/records/52X20KLGHLWO" },
-  { title: "IBM Front-End Developer Professional Certificate", issuer: "IBM · Coursera", year: "", status: "progress", url: "" },
-  { title: "Google Data Analytics", issuer: "Google · Coursera", year: "", status: "progress", url: "" },
+  { title: "Claude 101", issuer: "Anthropic", icon: "anthropic", year: "2026", status: "done", url: "https://verify.skilljar.com/c/en7nvct9noaw" },
+  { title: "AI Fluency for Students", issuer: "Anthropic", icon: "anthropic", year: "2026", status: "done", url: "https://verify.skilljar.com/c/7m5sweobzpdd" },
+  { title: "Foundations: Data, Data, Everywhere", issuer: "Google · Coursera", icon: "google", year: "2026", status: "done", url: "https://www.coursera.org/account/accomplishments/records/RBBSDJBRRH0E" },
+  { title: "Excel [40 horas]", issuer: "Curso em Vídeo", icon: "circle-play", year: "2026", status: "done", url: "https://www.cursoemvideo.com/certificates/certificado/?course_id=25933&cert-nonce=3921245bac" },
+  { title: "Fundamentos de Suporte Técnico em TI", issuer: "Google · Coursera", icon: "google", year: "2026", status: "done", url: "https://www.coursera.org/account/accomplishments/records/52X20KLGHLWO" },
+  { title: "IBM Front-End Developer Professional Certificate", issuer: "IBM · Coursera", icon: "coursera", year: "", status: "progress", url: "" },
+  { title: "Google Data Analytics", issuer: "Google · Coursera", icon: "google", year: "", status: "progress", url: "" },
 ];
