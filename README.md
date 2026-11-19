@@ -29,3 +29,8 @@ Abra `index.html` no navegador, ou rode `python3 -m http.server` e acesse `http:
 
 Os arquivos `style.css`, `icons.js`, `data.js` e `script.js` são carregados com `?v=...` no `index.html` e no `projetos.html`.
 Troque esse número a cada atualização para o navegador de quem visita não misturar arquivos novos com versões antigas guardadas em cache.
+
+## Imagens
+
+Fotos e miniaturas ficam em WebP (`assets/img`, `assets/projects`, `assets/space`). Ao trocar uma imagem, salve em WebP
+no tamanho em que ela aparece no site (miniaturas 1200×750) e atualize `width` e `height` no HTML.
