@@ -264,7 +264,7 @@ fill("#other", OTHER.map((p) => `
     delete info.title.dataset.done;
     scramble(info.title);
     dots.forEach((d, k) => d.setAttribute("aria-selected", k === i));
-    cards.forEach((c, k) => { c.tabIndex = k === i ? 0 : -1; c.style.pointerEvents = k === i ? "auto" : "none"; });
+    cards.forEach((c, k) => { c.tabIndex = k === i ? 0 : -1; c.style.pointerEvents = k === i ? "auto" : "none"; c.classList.toggle("is-active", k === i); });
   }
 
   let tTop = 0, tH = 1;
@@ -492,4 +492,59 @@ fill("#year", new Date().getFullYear());
     set(on);
     try { localStorage.setItem("bg-paused", on ? "1" : "0"); } catch (e) {}
   }));
+})();
+
+/* ---------- Título do topo: palavra por palavra ---------- */
+(() => {
+  const h = $(".hero-title");
+  if (!h) return;
+  let i = 0;
+  const wrap = (node) => {
+    [...node.childNodes].forEach((n) => {
+      if (n.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach((part) => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) { frag.append(" "); return; }
+          const w = document.createElement("span"); w.className = "w";
+          const s = document.createElement("span"); s.textContent = part; s.style.setProperty("--i", i++);
+          w.append(s); frag.append(w);
+        });
+        n.replaceWith(frag);
+      } else if (n.nodeType === 1) wrap(n);
+    });
+  };
+  wrap(h);
+})();
+
+/* ---------- Altímetro ---------- */
+(() => {
+  const alt = $("#altimeter");
+  if (!alt) return;
+  const stops = [["inicio", "Início"], ["trabalhos", "Trabalhos"], ["sobre", "Sobre"], ["experiencia", "Experiência"], ["certificados", "Certificados"], ["contato", "Contato"]]
+    .map(([id, name]) => ({ id, name, el: document.getElementById(id) })).filter((s) => s.el);
+  alt.innerHTML = `<span class="alt-line"></span><span class="alt-fill"></span><span class="alt-mark"></span>` +
+    stops.map((s) => `<a class="alt-stop" href="#${s.id}"><span>${s.name}</span></a>`).join("") +
+    `<span class="alt-depth">000%</span>`;
+  const links = $$(".alt-stop", alt), fill = $(".alt-fill", alt), mark = $(".alt-mark", alt), depth = $(".alt-depth", alt);
+  let max = 1, tops = [];
+  const measure = () => {
+    max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+    tops = stops.map((s) => Math.min(1, (s.el.getBoundingClientRect().top + scrollY) / max));
+    links.forEach((l, k) => { l.style.top = (tops[k] * 100).toFixed(2) + "%"; });
+  };
+  const update = () => {
+    const p = Math.min(1, scrollY / max);
+    fill.style.height = (p * 100).toFixed(2) + "%";
+    mark.style.top = (p * 100).toFixed(2) + "%";
+    depth.textContent = String(Math.round(p * 100)).padStart(3, "0") + "%";
+    let on = 0;
+    tops.forEach((t, k) => { if (p + 0.02 >= t) on = k; });
+    links.forEach((l, k) => l.classList.toggle("on", k === on));
+  };
+  measure(); update();
+  addEventListener("scroll", update, { passive: true });
+  addEventListener("resize", () => { measure(); update(); });
+  addEventListener("load", () => { measure(); update(); });
+  new ResizeObserver(() => { measure(); update(); }).observe(document.body);
 })();

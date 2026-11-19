@@ -481,3 +481,109 @@ p { text-wrap: pretty; }
 .motion-toggle:hover { color: var(--text); border-color: var(--text); }
 /* fundo pausado: estrelas, grão e imagens param onde estão */
 .bg-paused .grain, .bg-paused .status i, .bg-paused .hud-bar span:nth-child(2) b::before { animation-play-state: paused; }
+
+
+/* =========================================================
+   DEMONSTRAÇÃO DE VISUAL
+   ========================================================= */
+
+/* Aberturas de seção: índice real da página + título display */
+.opener {
+  display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 10px 24px;
+  padding-bottom: 22px; margin-bottom: 44px; border-bottom: 1px solid var(--line);
+}
+.op-idx { grid-column: 1 / -1; color: var(--dim); font-size: 0.75rem; letter-spacing: 0.04em; }
+.op-title {
+  font-size: clamp(2.8rem, 8vw, 6.4rem); font-weight: 500; letter-spacing: -0.05em; line-height: 0.92;
+  grid-column: 1;
+}
+.op-sub { grid-column: 1; color: var(--muted); font-size: 1rem; max-width: 46ch; }
+.op-link { grid-column: 2; grid-row: 2 / 4; align-self: end; color: var(--text); padding: 9px 16px; border: 1px solid var(--line-2); border-radius: 999px; transition: background 0.2s, color 0.2s; }
+.op-link:hover { background: var(--text); color: var(--bg); }
+.showcase .opener { margin-bottom: 0; }
+
+/* Foto do topo como visor de câmera */
+.hero-photo { overflow: visible; border: 0; background: none; }
+.hero-photo img { border-radius: 6px; }
+.hero-photo .vf {
+  position: absolute; inset: -10px; pointer-events: none;
+  --c: rgba(236, 238, 241, 0.75); --l: 18px;
+  background:
+    linear-gradient(var(--c), var(--c)) top left / var(--l) 1px no-repeat,
+    linear-gradient(var(--c), var(--c)) top left / 1px var(--l) no-repeat,
+    linear-gradient(var(--c), var(--c)) top right / var(--l) 1px no-repeat,
+    linear-gradient(var(--c), var(--c)) top right / 1px var(--l) no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom left / var(--l) 1px no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom left / 1px var(--l) no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom right / var(--l) 1px no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom right / 1px var(--l) no-repeat;
+}
+.vf-top {
+  position: absolute; left: 10px; top: 10px; display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.6rem; letter-spacing: 0.06em; color: var(--text); padding: 3px 7px; border-radius: 4px; background: rgba(8, 9, 12, 0.7);
+}
+.vf-top i { width: 5px; height: 5px; border-radius: 50%; background: #ff5a4f; animation: hud-pulse 1.6s infinite; }
+.hero-photo figcaption { border-radius: 0 0 6px 6px; }
+
+/* Título do topo: as palavras sobem uma a uma */
+.hero-title .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+.hero-title .w > span { display: inline-block; transform: translateY(105%); animation: word-up 0.9s var(--ease) forwards; animation-delay: calc(var(--i) * 45ms + 150ms); }
+@keyframes word-up { to { transform: none; } }
+
+/* Vitrine: projeto ativo iluminado, título maior */
+.sc-card { transition: box-shadow 0.6s var(--ease); }
+.sc-card.is-active { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14), 0 60px 120px -40px rgba(140, 170, 255, 0.45); }
+.sc-title { font-size: clamp(2rem, 4.6vw, 3.6rem); letter-spacing: -0.04em; }
+
+/* Contato: o e-mail é o protagonista */
+.contact .op-idx { margin-bottom: 26px; }
+.contact-title { font-size: clamp(1.5rem, 3vw, 2.4rem); max-width: 22ch; }
+.mail { margin-top: 28px; }
+.mail-big {
+  font-size: clamp(2rem, 7.4vw, 6.2rem); font-weight: 500; letter-spacing: -0.045em; line-height: 1;
+  border-bottom: 0; padding-bottom: 0.08em;
+  background: linear-gradient(currentColor, currentColor) left bottom / 0% 2px no-repeat;
+  transition: background-size 0.5s var(--ease);
+}
+.mail-big:hover { background-size: 100% 2px; }
+
+/* Links de texto: sublinhado que se desenha */
+.hero-meta a, .socials a, .p-links a, .footer a {
+  background: linear-gradient(currentColor, currentColor) left bottom / 0% 1px no-repeat;
+  transition: background-size 0.35s var(--ease), color 0.2s; padding-bottom: 2px;
+}
+.hero-meta a:hover, .socials a:hover, .p-links a:hover, .footer a:hover { background-size: 100% 1px; }
+
+/* Altímetro: régua fixa com a posição na "viagem" */
+.altimeter { display: none; }
+@media (min-width: 1180px) {
+  .altimeter {
+    display: block; position: fixed; z-index: 35; left: max(22px, env(safe-area-inset-left, 0px)); top: 50%;
+    height: 56vh; width: 70px; transform: translateY(-50%); font-size: 0.62rem; letter-spacing: 0.05em;
+  }
+  .alt-line { position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--line-2); }
+  .alt-fill { position: absolute; left: 0; top: 0; width: 1px; height: 0; background: var(--text); }
+  .alt-mark { position: absolute; left: -3px; width: 7px; height: 1px; background: var(--text); transform: translateY(-0.5px); }
+  .alt-mark::after { content: ""; position: absolute; left: -2px; top: -3px; width: 11px; height: 7px; border: 1px solid var(--text); border-radius: 2px; }
+  .alt-stop {
+    position: absolute; left: 0; display: flex; align-items: center; gap: 8px; color: var(--dim);
+    transform: translateY(-50%); white-space: nowrap; padding: 4px 0;
+  }
+  .alt-stop::before { content: ""; width: 6px; height: 1px; background: currentColor; }
+  .alt-stop span { opacity: 0; transform: translateX(-4px); transition: opacity 0.25s, transform 0.25s var(--ease); }
+  .altimeter:hover .alt-stop span, .alt-stop.on span, .alt-stop:focus-visible span { opacity: 1; transform: none; }
+  .alt-stop.on { color: var(--text); }
+  .alt-depth { position: absolute; left: 0; bottom: -28px; color: var(--dim); font-variant-numeric: tabular-nums; }
+}
+
+@media (max-width: 680px) {
+  .opener { grid-template-columns: 1fr; margin-bottom: 32px; }
+  .op-link { grid-column: 1; grid-row: auto; justify-self: start; }
+  .hero-photo .vf { inset: -6px; --l: 12px; }
+  .vf-top { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-title .w > span { transform: none; animation: none; }
+}
+
+.ph-clip { display: block; width: 100%; height: 100%; overflow: hidden; border-radius: 6px; }
