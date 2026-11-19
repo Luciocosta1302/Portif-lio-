@@ -34,12 +34,19 @@
     { src: "moon-half", x: 0.12,  y: 0.42,  t: 1,   size: 1500, o: 0.4, full: true, far: 1000, end: 650 }, // fica no fim
   ];
 
+  // tamanho real de cada imagem (evita mudança de layout)
+  const SPACE_DIMS = {"bipolar":[1200,1116],"butterfly":[1024,910],"cluster":[758,1024],"crab":[1200,1406],"eclipse":[1600,1067],"gum19":[1066,959],"hourglass":[1000,1000],"jewel":[985,697],"lmc":[1200,1285],"moon-half":[1600,1067],"n49":[1200,1284],"pillars":[480,630],"saturn":[1024,929],"spiral":[1024,1014],"tadpoles":[1200,1182]};
+
   let W, H, dpr, mobile, maxCam = 1, cam = 0, target = 0, vel = 0, warp = 0, stars = [];
   const manifesto = document.getElementById("manifesto");
+  let mTop = 0, mH = 0; // posição da seção manifesto, medida no resize
 
   const els = OBJECTS.map((o) => {
     const img = new Image();
-    img.dataset.src = `assets/space/${o.src}.jpg`;
+    img.dataset.name = o.src;
+    const dm = SPACE_DIMS[o.src];
+    if (dm) { img.width = dm[0]; img.height = dm[1]; }
+    img.loading = "lazy";
     img.alt = "";
     img.decoding = "async";
     if (o.full) img.className = "full";
@@ -52,6 +59,7 @@
     dpr = Math.min(devicePixelRatio || 1, 2);
     canvas.width = W * dpr; canvas.height = H * dpr;
     maxCam = Math.max(1, (document.documentElement.scrollHeight - H) * DEPTH);
+    if (manifesto) { const r = manifesto.getBoundingClientRect(); mTop = r.top + scrollY; mH = r.height; }
     // posições proporcionais ao comprimento da página; a lua fica logo depois do fim
     OBJECTS.forEach((o) => { o.zAbs = o.z ?? (o.t * maxCam + (o.end ?? 900)); });
     sizeObjects();
@@ -76,7 +84,7 @@
       const el = els[i];
       const rel = o.zAbs - cam;
       const far = o.far || 2600;
-      if (!el.src && rel < far + 1500) el.src = el.dataset.src; // carrega um pouco antes de aparecer
+      if (!el.src && rel < far + 1500) el.src = `assets/space/${el.dataset.name}${mobile ? "-m" : ""}.webp`; // carrega um pouco antes de aparecer
       let op = 0, t = last[i].t;
       // some antes de ficar enorme: nada cresce mais que 2,6x perto do texto
       if (rel > 220 && rel < far && el.naturalWidth) {
@@ -132,14 +140,14 @@
   }
 
   function frame() {
+    if (document.documentElement.classList.contains("bg-paused")) { requestAnimationFrame(frame); return; }
     target = scrollY * DEPTH;
     const prev = cam;
     cam += (target - cam) * 0.08;               // câmera com inércia
     vel += ((cam - prev) - vel) * 0.25;
     // perto da seção manifesto as estrelas entram em "dobra"
     if (manifesto) {
-      const r = manifesto.getBoundingClientRect();
-      const d = Math.abs(r.top + r.height / 2 - H / 2) / H;
+      const d = Math.abs(mTop - scrollY + mH / 2 - H / 2) / H;
       warp += (Math.max(0, 1 - d * 1.6) - warp) * 0.06;
     }
     placeObjects();
@@ -167,6 +175,8 @@ const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const esc = (s = "") => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const pad = (n) => String(n).padStart(2, "0");
 const ext = 'target="_blank" rel="noopener"';
+// miniatura em dois tamanhos: o navegador escolhe pela largura da tela
+const srcsetOf = (src) => `${src.replace(".webp", "-600.webp")} 600w, ${src} 1200w`;
 
 /* ---------- Trabalhos ---------- */
 const fill = (sel, html) => { const el = $(sel); if (el) el.innerHTML = html; return el; };
@@ -179,7 +189,7 @@ const linksOf = (p) => [
 fill("#work-count", `(${pad(WORK.length)})`);
 fill("#work", WORK.map((p, i) => {
   const href = p.live || p.code;
-  const thumb = `<img src="${esc(p.image)}" alt="Prévia do projeto ${esc(p.title)}" loading="lazy" width="1200" height="750" />
+  const thumb = `<img src="${esc(p.image)}" srcset="${esc(srcsetOf(p.image))}" sizes="(max-width: 680px) 92vw, 600px" alt="Prévia do projeto ${esc(p.title)}" loading="lazy" width="1200" height="750" />
     ${!href ? `<span class="badge mono">Em breve</span>` : ""}
     ${p.chip ? `<span class="chip mono">${esc(p.chip)}</span>` : ""}`;
   const links = linksOf(p);
@@ -188,7 +198,7 @@ fill("#work", WORK.map((p, i) => {
     ${href ? `<a class="thumb" href="${esc(href)}" ${ext} data-cursor="${p.live ? "Ver site ↗" : "Ver código ↗"}">${thumb}</a>`
            : `<div class="thumb">${thumb}</div>`}
     <span class="p-index mono">N°${pad(i + 1)} / ${pad(WORK.length)}</span>
-    <div class="p-head"><h3 data-scramble>${esc(p.title)}</h3><span class="mono">${esc(p.year)}</span></div>
+    <div class="p-head"><h3 data-scramble translate="no">${esc(p.title)}</h3><span class="mono">${esc(p.year)}</span></div>
     <p class="p-role">${esc(p.role)}</p>
     <p class="p-desc">${esc(p.desc)}</p>
     <div class="p-foot">
@@ -222,7 +232,7 @@ fill("#other", OTHER.map((p) => `
     const open = href ? `a href="${esc(href)}" ${ext} data-cursor="${p.live ? "Ver site ↗" : "Ver código ↗"}"` : "div";
     const close = href ? "a" : "div";
     return `<${open} class="sc-card" data-i="${i}" aria-label="${esc(p.title)}">
-      <img src="${esc(p.image)}" alt="Prévia do projeto ${esc(p.title)}" width="1200" height="750" ${i > 1 ? 'loading="lazy"' : ""} />
+      <img src="${esc(p.image)}" srcset="${esc(srcsetOf(p.image))}" sizes="(max-width: 700px) 86vw, 880px" alt="Prévia do projeto ${esc(p.title)}" width="1200" height="750" loading="lazy" />
       ${p.chip ? `<span class="chip mono">${esc(p.chip)}</span>` : ""}
       ${!href ? `<span class="badge mono">Em breve</span>` : ""}
     </${close}>`;
@@ -245,6 +255,7 @@ fill("#other", OTHER.map((p) => `
     box.classList.remove("swap"); void box.offsetWidth; box.classList.add("swap");
     info.index.textContent = `N°${pad(i + 1)} / ${pad(n)} · ${p.year}`;
     info.title.textContent = p.title;
+    info.title.translate = false;
     info.role.textContent = p.role;
     info.desc.textContent = p.desc;
     info.tags.textContent = p.tags.join(" · ");
@@ -256,10 +267,15 @@ fill("#other", OTHER.map((p) => `
     cards.forEach((c, k) => { c.tabIndex = k === i ? 0 : -1; c.style.pointerEvents = k === i ? "auto" : "none"; });
   }
 
+  let tTop = 0, tH = 1;
+  const measure = () => { const r = track.getBoundingClientRect(); tTop = r.top + scrollY; tH = r.height; };
+  measure();
+  addEventListener("resize", measure);
+  addEventListener("load", measure);
+  new ResizeObserver(measure).observe(document.body);
   const progress = () => {
-    const r = track.getBoundingClientRect();
-    const span = Math.max(1, r.height - innerHeight);
-    return Math.min(1, Math.max(0, -r.top / span)) * (n - 1);
+    const span = Math.max(1, tH - innerHeight);
+    return Math.min(1, Math.max(0, (scrollY - tTop) / span)) * (n - 1);
   };
   const stillM = matchMedia("(prefers-reduced-motion: reduce)").matches;
   let cur = progress(), running = false;
@@ -301,9 +317,8 @@ fill("#other", OTHER.map((p) => `
   // pontos: levam o scroll até o projeto escolhido
   dots.forEach((d) => d.addEventListener("click", () => {
     const i = +d.dataset.i;
-    const top = track.getBoundingClientRect().top + scrollY;
-    const span = track.offsetHeight - innerHeight;
-    scrollTo({ top: top + (span * i) / (n - 1) + 1, behavior: stillM ? "auto" : "smooth" });
+    const span = tH - innerHeight;
+    scrollTo({ top: tTop + (span * i) / (n - 1) + 1, behavior: stillM ? "auto" : "smooth" });
   }));
 })();
 
@@ -320,7 +335,7 @@ fill("#stack", STACK.map((g) => `
 /* ---------- Experiência / formação ---------- */
 const timeline = (list) => list.map((e) => `
   <li class="reveal ${e.type === "open" ? "open" : ""}"><div class="row">
-    <span class="mono">${esc(e.period)}</span><span>${e.logo ? `<img class="t-logo" src="${esc(e.logo)}" alt="" width="28" height="28" />` : ""}${esc(e.role)}</span><span>${esc(e.place)}</span>
+    <span class="mono">${esc(e.period)}</span><span>${e.logo ? `<img class="t-logo" src="${esc(e.logo)}" alt="" width="28" height="28" loading="lazy" />` : ""}${esc(e.role)}</span><span>${esc(e.place)}</span>
   </div></li>`).join("");
 fill("#experience", timeline(EXPERIENCE));
 fill("#education", timeline(EDUCATION));
@@ -387,8 +402,13 @@ tick(); setInterval(tick, 20000);
 const cxEl = $("#cx"), cyEl = $("#cy"), depthEl = $("#depth");
 const p4 = (n) => String(Math.max(0, Math.round(n))).padStart(4, "0");
 addEventListener("pointermove", (e) => { if (cxEl) { cxEl.textContent = p4(e.clientX); cyEl.textContent = p4(e.clientY); } }, { passive: true });
+let pageMax = 1;
+const measurePage = () => { pageMax = document.documentElement.scrollHeight - innerHeight; };
+measurePage();
+addEventListener("resize", measurePage);
+addEventListener("load", measurePage);
 const updDepth = () => {
-  const max = document.documentElement.scrollHeight - innerHeight;
+  const max = pageMax;
   if (depthEl) depthEl.textContent = String(Math.round((scrollY / Math.max(1, max)) * 100)).padStart(3, "0");
 };
 addEventListener("scroll", updDepth, { passive: true }); updDepth();
@@ -455,3 +475,21 @@ const io = new IntersectionObserver((entries) => entries.forEach((en) => {
 $$(".reveal, .label, .about-grid, .contact > *").forEach((el) => { el.classList.add("reveal"); io.observe(el); });
 
 fill("#year", new Date().getFullYear());
+
+/* ---------- Pausar a animação do fundo ---------- */
+(() => {
+  const btns = $$(".motion-toggle");
+  if (!btns.length) return;
+  const set = (on) => {
+    document.documentElement.classList.toggle("bg-paused", on);
+    btns.forEach((b) => { b.setAttribute("aria-pressed", on); b.textContent = on ? "Retomar animação do fundo" : "Pausar animação do fundo"; });
+  };
+  let saved = false;
+  try { saved = localStorage.getItem("bg-paused") === "1"; } catch (e) {}
+  set(saved);
+  btns.forEach((b) => b.addEventListener("click", () => {
+    const on = !document.documentElement.classList.contains("bg-paused");
+    set(on);
+    try { localStorage.setItem("bg-paused", on ? "1" : "0"); } catch (e) {}
+  }));
+})();
